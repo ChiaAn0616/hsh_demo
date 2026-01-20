@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="zh-MY" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>海成发 Hai Seng Huat | 2026 CNY Packages</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@500;700;900&family=ZCOOL+KuaiLe&family=Anton&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <style>
+        /* =========================================
+           1. 全局配色 & 背景
+           ========================================= */
+        body { 
+            font-family: 'Noto Sans SC', sans-serif; 
+            overflow-x: hidden; 
+            color: #fff; 
+            background: radial-gradient(circle at center, #d95e5c 0%, #932725 50%, #7a1f1d 100%);
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+        }
+        h1, h2, h3, .serif { font-family: 'Noto Serif SC', serif; }
+        
+        .font-festive { font-family: 'ZCOOL KuaiLe', cursive; }
+        .font-price { font-family: 'Anton', sans-serif; }
+
+        :root { --bright-gold: #FFD700; --rich-gold: #DAA520; --light-gold: #FFFACD; }
+        .text-gold { color: var(--bright-gold); } 
+        .text-cream { color: #FFF8DC; } 
+        .bg-gold { background-color: var(--bright-gold); }
+        .border-gold { border-color: var(--bright-gold); }
+
+        h1.text-gold, h2.text-gold, .text-gold-glow {
+            text-shadow: 0 2px 15px rgba(255, 215, 0, 0.6);
+        }
+
+        /* 语言切换按钮样式 */
+        #lang-toggle-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 99999;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--bright-gold);
+            color: var(--bright-gold);
+            padding: 5px 15px;
+            border-radius: 9999px;
+            font-weight: bold;
+            font-family: 'Anton', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+        #lang-toggle-btn:hover {
+            background: var(--bright-gold);
+            color: #8B0000;
+            box-shadow: 0 0 15px var(--bright-gold);
+        }
+
+        /* =========================================
+           [修复 2] 金粉层级调整
+           ========================================= */
+        #sparkles-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1; /* 从 50 改为 1，确保在文字后面 */
+            pointer-events: none; overflow: hidden;
+        }
+        .sparkle-dot {
+            position: absolute; background-color: #FFFACD; border-radius: 50%;
+            opacity: 0; box-shadow: 0 0 10px 2px rgba(255, 215, 0, 0.6); 
+        }
+
+        /* =========================================
+           2. 双层霸气海浪
+           ========================================= */
+        .wave-fixed-container {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            pointer-events: none; overflow: hidden;   
+            transform: translateY(120%); will-change: transform;
+        }
+        .wave-front { z-index: 9999; height: 10vh; min-height: 130px; }
+        .wave-back { z-index: 9998; height: 15vh; min-height: 160px; opacity: 0.5; filter: brightness(0.8); }
+        .wave-scroller { display: flex; align-items: flex-end; width: max-content; height: 100%; will-change: transform; }
+        .wave-img { height: 100%; width: auto; display: block; flex-shrink: 0; margin: 0; margin-right: -3px; object-fit: fill; }
+        @media (max-width: 1024px) {
+            .wave-front { height: 10vh; min-height: 100px; }
+            .wave-back { height: 13vh; min-height: 120px; }
+        }
+
+        /* =========================================
+           3. 标题特效
+           ========================================= */
+        .ocean-text-wave {
+            color: #0284C7; filter: url(#wave-filter);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 0 10px rgba(2, 132, 199, 0.5);
+            display: inline-block; position: relative; z-index: 2;
+        }
+        .svg-filter-def { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+        /* =========================================
+           下滑箭头动画
+           ========================================= */
+        .scroll-hint-wrapper {
+            cursor: pointer; display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
+            animation: float-arrow 2s ease-in-out infinite; transition: opacity 0.3s;
+        }
+        .scroll-hint-wrapper:hover { opacity: 0.8; }
+        @keyframes float-arrow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
+
+        /* =========================================
+           Tab & Container 样式
+           ========================================= */
+        
+        .detail-container {
+            background: url('background_package.jpg') center center / cover no-repeat;
+            border: 3px solid var(--bright-gold);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            position: relative;
+            z-index: 10;
+            border-top-left-radius: 0 !important;
+            border-top-right-radius: 0 !important;
+            border-bottom-left-radius: 1.5rem; 
+            border-bottom-right-radius: 1.5rem;
+        }
+
+        .tab-card {
+            cursor: pointer; opacity: 0.8; transition: all 0.3s ease; position: relative;
+            border: 2px solid transparent; background: rgba(0,0,0,0.2); z-index: 5;
+            margin-bottom: 0; border-radius: 0.75rem; overflow: visible; 
+        }
+        
+        .bag-closed-img {
+            position: absolute; top: 50%; right: 10px; transform: translateY(-50%) rotate(10deg);
+            width: 50px; opacity: 0.4; pointer-events: none; transition: opacity 0.4s ease;
+        }
+
+        .tab-card.active {
+            opacity: 1;
+            background: url('background_package.jpg') center center / cover no-repeat;
+            border-top: 3px solid var(--bright-gold);
+            border-left: 3px solid var(--bright-gold);
+            border-right: 3px solid var(--bright-gold);
+            border-bottom: 3px solid #db4a39;
+            z-index: 20; 
+            margin-bottom: -3px; 
+            padding-bottom: 1rem;
+            border-bottom-left-radius: 0; border-bottom-right-radius: 0;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.2); 
+        }
+        
+        .tab-card.active .bag-closed-img { opacity: 0; }
+        .tab-indicator { opacity: 0; transform: translateY(-10px); transition: all 0.3s; }
+        .tab-card.active .tab-indicator { opacity: 1; transform: translateY(0); }
+
+        .tab-title-sticker {
+            color: #d80000; 
+            text-shadow: 2px 2px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+            letter-spacing: 1px;
+        }
+        .tab-card.active .tab-title-sticker {
+             color: #FFD700;
+             text-shadow: 2px 2px 0 #8B0000, -1px -1px 0 #8B0000, 1px -1px 0 #8B0000, -1px 1px 0 #8B0000, 1px 1px 0 #8B0000;
+        }
+
+        .price-pill {
+            background: #d60000; border: 2px solid #fff; border-radius: 9999px;
+            display: inline-block; padding: 2px 12px; color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3); transform: rotate(-2deg); transition: all 0.3s;
+        }
+        .tab-card.active .price-pill {
+            background: #fff; color: #d60000; border-color: #FFD700;
+            transform: rotate(0deg) scale(1.1); box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+        }
+
+        #main-open-bag {
+            position: absolute; bottom: -80px; left: -80px; width: 420px; z-index: 1; 
+            pointer-events: none; filter: drop-shadow(5px 5px 15px rgba(0,0,0,0.5));
+            transform-origin: bottom left; transform: rotate(-10deg); opacity: 0.85; mix-blend-mode: normal; 
+        }
+
+        @media (max-width: 768px) {
+            #main-open-bag { width: 260px; left: -40px; bottom: -30px; opacity: 0.5; }
+        }
+
+        #floating-lanterns-container { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            z-index: 50; pointer-events: none; opacity: 0; visibility: hidden; 
+        }
+
+        .lantern { position: absolute; top: 0; transform-origin: top center; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3)); }
+        
+        .l-pos-1 { left: -2%; width: 180px; } 
+        .l-pos-2 { left: 8%; width: 130px; } 
+        .l-pos-3 { right: 8%; width: 160px; } 
+        .l-pos-4 { right: -2%; width: 150px; }
+        
+        @media (max-width: 768px) {
+            .l-pos-1 { width: 100px; left: -5%; top: -2%; }
+            .l-pos-2 { width: 70px; left: 18%; }
+            .l-pos-3 { width: 90px; right: 15%; }
+            .l-pos-4 { width: 80px; right: -5%; top: -1%; }
+        }
+        
+        .hanging-firecracker { position: absolute; top: 0; width: 80px; z-index: 20; animation: swing 3s ease-in-out infinite alternate; filter: drop-shadow(2px 5px 8px rgba(0,0,0,0.5)); }
+        .fc-left { left: 2%; transform-origin: top center; } .fc-right { right: 2%; transform-origin: top center; animation-delay: -1s; }
+        @keyframes swing { 0% { transform: rotate(2deg); } 100% { transform: rotate(-2deg); } }
+        
+        .btn-gold-solid { background: linear-gradient(to bottom, var(--light-gold), var(--bright-gold), var(--rich-gold)); color: #8B0000; font-weight: 900; border: 2px solid #fff; box-shadow: 0 5px 15px rgba(255, 215, 0, 0.5); transition: 0.3s; text-shadow: 0 1px 1px rgba(255,255,255,0.5); }
+        .btn-gold-solid:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(255, 215, 0, 0.8); background: linear-gradient(to bottom, #fff, var(--bright-gold)); }
+        .gsap-reveal { opacity: 0; transform: translateY(30px); }
+        
+        .review-card {
+            background: white; color: #851d1b; border-radius: 1rem; padding: 1.5rem; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .review-card::before {
+            content: "“"; position: absolute; top: -10px; left: 20px; font-size: 4rem; color: var(--bright-gold); font-family: serif; opacity: 0.5;
+        }
+
+        #lucky-draw {
+            background: radial-gradient(circle at center, #ff7e79 0%, #c53030 50%, #7f1d1d 100%);
+        }
+
+        .lucky-draw-badge {
+            background: linear-gradient(to right, #FFFACD, #FFD700); color: #b91c1c; border-radius: 0.5rem; transform: skew(-10deg); box-shadow: 0 5px 15px rgba(0,0,0,0.3); display: inline-block;
+        }
+        
+        .prize-stage {
+            background: radial-gradient(circle at 50% 30%, #e64a45 0%, #932725 60%, #5c1816 100%);
+            border-radius: 1rem; position: relative; box-shadow: 0 10px 20px rgba(0,0,0,0.4), inset 0 2px 5px rgba(255,255,255,0.2);
+            transition: transform 0.3s ease;
+        }
+        .prize-stage:hover { transform: translateY(-5px); }
+        .prize-stage::after {
+            content: ''; position: absolute; bottom: -10px; left: 10%; width: 80%; height: 10px;
+            background: rgba(0,0,0,0.5); filter: blur(8px); z-index: -1;
+        }
+        
+        .prize-label {
+            background: linear-gradient(to right, #FFD700, #FDB931); color: #8B0000; font-weight: 900; padding: 0.3rem 1rem; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.3); text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+        }
+
+        @keyframes goldShineMove { 0% { background-position: -100% 50%; } 100% { background-position: 100% 50%; } }
+        .ribbon-flow-text {
+            background: linear-gradient(110deg, #CA972F 15%, #FEE140 35%, #FFFFC2 45%, #FFFFFF 50%, #FFFFC2 55%, #FEE140 65%, #CA972F 85%);
+            background-size: 200% auto; -webkit-background-clip: text; background-clip: text; color: transparent;
+            animation: goldShineMove 3s linear infinite; font-weight: 900; font-family: 'Noto Serif SC', serif;
+            letter-spacing: 0.05em; filter: drop-shadow(0 0 8px rgba(255, 223, 0, 0.8)); -webkit-font-smoothing: antialiased;
+        }
+        footer { position: relative; z-index: 10001; } 
+
+    </style>
+</head>
+<body>
+    
+    <button id="lang-toggle-btn" onclick="toggleLanguage()">EN | 中</button>
+
+    <svg class="svg-filter-def"><filter id="wave-filter"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="3" result="noise" data-filterId="1"><animate attributeName="baseFrequency" values="0.02;0.01;0.02" dur="10s" repeatCount="indefinite" /></feTurbulence><feDisplacementMap in="SourceGraphic" in2="noise" scale="6" xChannelSelector="R" yChannelSelector="G" /></filter></svg>
+
+    <div id="sparkles-container"></div>
+
+    <div id="floating-lanterns-container">
+        <img src="lantent_4.png" class="lantern l-pos-1" alt="Lantern">
+        <img src="lantent_3.png" class="lantern l-pos-2" alt="Lantern">
+        <img src="lantent_1.png" class="lantern l-pos-3" alt="Lantern">
+        <img src="lantent_2.png" class="lantern l-pos-4" alt="Lantern">
+    </div>
+
+    <div id="hero-firecrackers">
+        <img src="https://pngimg.com/d/chinese_new_year_PNG23.png" class="hanging-firecracker fc-left" alt="Firecracker">
+        <img src="https://pngimg.com/d/chinese_new_year_PNG23.png" class="hanging-firecracker fc-right" alt="Firecracker">
+    </div>
+
+    <div class="wave-fixed-container wave-back">
+        <div class="wave-scroller">
+            <img src="Wave.png" class="wave-img" alt="Wave"><img src="Wave.png" class="wave-img" alt="Wave"><img src="Wave.png" class="wave-img" alt="Wave"><img src="Wave.png" class="wave-img" alt="Wave"><img src="Wave.png" class="wave-img" alt="Wave"><img src="Wave.png" class="wave-img" alt="Wave"><img src="Wave.png" class="wave-img" alt="Wave"><img src="Wave.png" class="wave-img" alt="Wave">
+        </div>
+    </div>
+    <div class="wave-fixed-container wave-front">
+        <div class="wave-scroller">
+             <img src="Wave.png" class="wave-img" alt="Wave"><img src="Wave.png" class="wave-img" alt="Wave"><img src="Wave.png" class="wave-img" alt="Wave"><img src="Wave.png" class="wave-img" alt="Wave"><img src="Wave.png" class="wave-img" alt="Wave"><img src="Wave.png" class="wave-img" alt="Wave"><img src="Wave.png" class="wave-img" alt="Wave"><img src="Wave.png" class="wave-img" alt="Wave">
+            <img src="Wave.png" class="wave-img" alt="Wave"><img src="Wave.png" class="wave-img" alt="Wave"><img src="Wave.png" class="wave-img" alt="Wave"><img src="Wave.png" class="wave-img" alt="Wave">
+        </div>
+    </div>
+
+    <div class="relative z-10 pb-32"> 
+        <section id="hero" class="relative h-screen flex items-center justify-center overflow-hidden">
+            <div class="absolute inset-0 z-0">
+                <img src="https://placehold.co/1920x1080/932725/FFD700?text=Background+Photo" class="w-full h-full object-cover opacity-30">
+            </div>
+            <div class="relative z-10 text-center px-2 md:px-4 max-w-5xl mx-auto mt-20">
+                
+                <h1 class="gsap-reveal font-black text-gold leading-tight mb-8">
+                    
+                    <span class="block
+                                 text-4xl tracking-tighter      /* Mobile */
+                                 md:text-6xl md:tracking-tight  /* Tablet */
+                                 lg:text-7xl                    /* iPad Pro Landscape (修复) */
+                                 xl:text-8xl xl:tracking-tight  /* Desktop */
+                                 whitespace-nowrap" 
+                          data-i18n="hero_year">2026 年年有鱼</span>
+                    
+                    <span class="serif block mt-2 md:mt-4
+                                 text-3xl 
+                                 md:text-5xl
+                                 lg:text-6xl     /* iPad Pro 稍微调小 */
+                                 xl:text-7xl
+                                 whitespace-nowrap">
+                        <span class="text-white text-gold-glow" data-i18n="hero_cny">新春</span>
+                        <span class="ocean-text-wave" data-i18n="hero_seafood">海鲜</span>
+                        <span class="text-white text-gold-glow" data-i18n="hero_package">配套</span>
+                    </span>
+                    
+                    <span class="ribbon-flow-text block mt-2 md:mt-4
+                                 text-3xl 
+                                 md:text-5xl
+                                 lg:text-5xl    /* iPad Pro 稍微调小 */
+                                 xl:text-6xl" 
+                          data-i18n="hero_draw">消费抽大奖</span>
+                </h1>
+
+                <p class="gsap-reveal text-lg md:text-2xl lg:text-3xl text-cream font-light mb-12 max-w-3xl mx-auto drop-shadow-md leading-relaxed serif px-4">
+                    <span data-i18n="hero_desc_1">海成发带着满满鲜气， <br> 为您送上新春配套啦！</span>
+                    <br>
+                    <span class="block mt-4 md:mt-6">
+                        <span data-i18n="hero_desc_2">凡购买配套，便有机会把</span> <span class="text-gold font-bold text-gold-glow"><br><span data-i18n="hero_desc_3">超值好康</span></span> <span data-i18n="hero_desc_4">带回家！</span>
+                    </span>
+                    <br>
+                    <span class="font-bold text-gold text-gold-glow" data-i18n="hero_tagline">把大海的鲜味，变成全家人的福气。</span>
+                </p>
+                
+                <div id="scroll-hint" class="mt-8 md:mt-16 opacity-0" onclick="document.querySelector('#collections').scrollIntoView({behavior: 'smooth'})">
+                    <div class="scroll-hint-wrapper">
+                        <span class="text-gold text-sm md:text-lg tracking-[0.3em] font-light mb-2" data-i18n="scroll_more">下滑了解更多</span>
+                        <svg class="w-6 h-6 md:w-8 md:h-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="collections" class="py-24 relative">
+             <div class="container mx-auto px-4 max-w-6xl relative z-10">
+                <div class="text-center mb-12 gsap-reveal">
+                    <h2 class="font-bold text-gold mb-4 serif leading-snug
+                               text-2xl                   /* 手机 */
+                               md:text-4xl                /* 平板: 调小 */
+                               lg:text-6xl                /* 电脑 */
+                               whitespace-normal md:whitespace-nowrap /* 手机允许换行，平板电脑不换行 */
+                               ">
+                        <span data-i18n="section_selection">新春甄选</span> • <span class="text-white text-gold-glow" data-i18n="section_bundle">发财大礼包</span>
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 max-w-5xl mx-auto gsap-reveal relative z-20 items-end">
+                    <div class="tab-card active p-2 md:p-4 text-center group" onclick="switchPackage(0, this)">
+                        <img src="bag_closed.png" class="bag-closed-img" alt="closed bag">
+                        <div class="font-festive text-lg md:text-3xl mb-1 md:mb-2 relative z-10 tab-title-sticker" data-i18n="pkg_a_tab">配套 A</div>
+                        <div class="relative z-10 mt-1">
+                            <div class="price-pill font-price text-sm px-3 py-1 md:text-2xl md:px-4 md:py-2">RM 488</div>
+                        </div>
+                        <div class="tab-indicator absolute bottom-[-10px] left-1/2 -translate-x-1/2 text-gold">
+                            <svg width="20" height="10" viewBox="0 0 20 10"><path d="M0 0 L10 10 L20 0" fill="#9f2020"/></svg>
+                        </div>
+                    </div>
+
+                    <div class="tab-card p-2 md:p-4 text-center group" onclick="switchPackage(1, this)">
+                            <img src="bag_closed.png" class="bag-closed-img" alt="closed bag">
+                        <div class="font-festive text-lg md:text-3xl mb-1 md:mb-2 relative z-10 tab-title-sticker" data-i18n="pkg_b_tab">配套 B</div>
+                        <div class="relative z-10 mt-1">
+                            <div class="price-pill font-price text-sm px-3 py-1 md:text-2xl md:px-4 md:py-2">RM 388</div>
+                        </div>
+                        <div class="tab-indicator absolute bottom-[-10px] left-1/2 -translate-x-1/2 text-gold hidden">
+                            <svg width="20" height="10" viewBox="0 0 20 10"><path d="M0 0 L10 10 L20 0" fill="#9f2020"/></svg>
+                        </div>
+                    </div>
+
+                    <div class="tab-card p-2 md:p-4 text-center group" onclick="switchPackage(2, this)">
+                            <img src="bag_closed.png" class="bag-closed-img" alt="closed bag">
+                        <div class="font-festive text-lg md:text-3xl mb-1 md:mb-2 relative z-10 tab-title-sticker" data-i18n="pkg_c_tab">配套 C</div>
+                        <div class="relative z-10 mt-1">
+                            <div class="price-pill font-price text-sm px-3 py-1 md:text-2xl md:px-4 md:py-2">RM 298</div>
+                        </div>
+                            <div class="tab-indicator absolute bottom-[-10px] left-1/2 -translate-x-1/2 text-gold hidden">
+                            <svg width="20" height="10" viewBox="0 0 20 10"><path d="M0 0 L10 10 L20 0" fill="#9f2020"/></svg>
+                        </div>
+                    </div>
+
+                    <div class="tab-card p-2 md:p-4 text-center group" onclick="switchPackage(3, this)">
+                            <img src="bag_closed.png" class="bag-closed-img" alt="closed bag">
+                        <div class="font-festive text-lg md:text-3xl mb-1 md:mb-2 relative z-10 tab-title-sticker" data-i18n="pkg_d_tab">拾鲜围炉</div>
+                        <div class="relative z-10 mt-1">
+                            <div class="price-pill font-price text-sm px-3 py-1 md:text-2xl md:px-4 md:py-2">RM 218</div>
+                        </div>
+                            <div class="tab-indicator absolute bottom-[-10px] left-1/2 -translate-x-1/2 text-gold hidden">
+                            <svg width="20" height="10" viewBox="0 0 20 10"><path d="M0 0 L10 10 L20 0" fill="#9f2020"/></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detail-container rounded-b-3xl p-3 md:p-12 max-w-5xl mx-auto min-h-[500px] flex items-center justify-center relative overflow-hidden gsap-reveal">                    
+                    <div id="bg-text" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[15rem] md:text-[20rem] font-black text-white/5 pointer-events-none serif leading-none select-none transition-all duration-500 z-0">
+                        A
+                    </div>
+
+                    <img id="main-open-bag" src="bag_opened.png" class="opacity-100" alt="Open Bag">
+
+                    <div class="flex flex-col justify-center items-center text-center relative z-10 max-w-4xl mx-auto w-full">
+    
+                        <h3 id="pkg-title" class="font-black text-gold serif mb-2 text-gold-glow leading-snug
+                                                  text-2xl md:text-4xl lg:text-6xl">年年有鱼 A</h3>
+                        
+                        <div class="h-1 w-24 bg-gold mb-6"></div>
+
+                        <div id="pkg-img-grid" class="grid grid-cols-3 gap-2 md:gap-6 w-full max-w-3xl mx-auto mb-8 px-0">
+                            </div>
+                        
+                        <p id="pkg-desc" style="text-shadow: 2px 2px 0 #8B0000, -1px -1px 0 #8B0000, 1px -1px 0 #8B0000, -1px 1px 0 #8B0000, 1px 1px 0 #8B0000;" 
+                           class="text-base md:text-xl lg:text-2xl text-white font-bold mb-8 leading-relaxed max-w-2xl px-4 serif">
+                            尊贵首选！集齐石斑、斗鲳、海参、鱼鳔等顶级海味。鱼虾俱全，寓意十全十美，为您呈献最豪华的除夕盛宴。
+                        </p>
+
+                        <a id="pkg-buy-btn" href="#" target="_blank" 
+                            class="btn-gold-solid inline-block text-center py-2 px-8 md:py-4 md:px-12 rounded-xl text-lg md:text-xl w-2/3 md:w-auto relative z-20 mx-auto shadow-xl" data-i18n="order_btn">
+                            网站下单
+                        </a>
+                    </div>
+                </div>
+             </div>
+        </section>
+
+        <section id="lucky-draw" class="py-24 relative overflow-hidden">
+            
+            <div class="container mx-auto px-4 max-w-6xl relative z-10 text-center">
+                <div class="gsap-reveal mb-20">
+                    <div class="lucky-draw-badge px-6 py-2 text-xl md:text-2xl font-black mb-6 animate-pulse" data-i18n="draw_badge">
+                        一年一次的好机会！
+                    </div>
+                    <h2 class="text-3xl md:text-7xl font-black text-gold serif mb-4 text-gold-glow drop-shadow-xl">
+                        <span data-i18n="draw_title_1">新春海鲜</span> • <span data-i18n="draw_title_2">开运抽奖活动</span>
+                    </h2>
+                    <p class="text-2xl md:text-3xl text-cream font-bold serif mb-2" data-i18n="draw_subtitle">
+                        奖品乱乱送，赢家可能就是你
+                    </p>
+                    <div class="w-24 h-1 bg-gold mx-auto my-6 rounded-full"></div>
+                    <p class="text-lg md:text-xl text-cream/90 max-w-2xl mx-auto bg-black/20 p-4 rounded-lg border border-gold/30">
+                        <span class="text-gold font-bold" data-i18n="draw_how">如何参加：</span> <span data-i18n="draw_rule_1">凡是购买</span> <span class="text-gold font-bold" data-i18n="draw_rule_2">2026年年有鱼新春配套</span><br>
+                        <span data-i18n="draw_rule_3">即可获得一次</span> <span class="text-gold font-bold" data-i18n="draw_rule_4">开运抽奖机会</span>！
+                    </p>
+                </div>
+
+                <div class="gsap-reveal grid grid-cols-1 md:grid-cols-3 gap-8 items-end max-w-5xl mx-auto mb-12">
+                    
+                    <div class="order-2 md:order-1 prize-stage p-6 pb-12 flex flex-col items-center justify-end h-64 md:h-80 relative">
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-4 z-20">
+                             <span class="prize-label text-sm md:text-base whitespace-nowrap" data-i18n="prize_1">一等奖</span>
+                        </div>
+                        <img src="Air Fryer.png" class="translate-y-6 w-40 md:w-48 h-auto object-contain mb-4 drop-shadow-2xl transition hover:scale-110 duration-300" alt="Air Fryer">
+                        <h3 class="text-2xl font-bold text-cream serif translate-y-6" data-i18n="prize_1_name">空气炸锅</h3>
+                        <p class="text-sm text-white/70 mt-1 translate-y-6" data-i18n="prize_1_desc">健康美味，轻松搞定</p>
+                    </div>
+
+                    <div class="order-1 md:order-2 prize-stage p-8 pb-16 flex flex-col items-center justify-end h-80 md:h-96 relative z-10 border-4 border-gold shadow-[0_0_30px_rgba(255,215,0,0.3)]">
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-5 z-20 w-max">
+                             <span class="prize-label text-lg md:text-xl px-6 py-2 whitespace-nowrap" data-i18n="prize_grand">特等奖</span>
+                        </div>
+                        
+                        <img src="Freezer.png" class="w-32 md:w-44 h-auto object-contain drop-shadow-2xl transition hover:scale-110 duration-300 translate-y-6 -mb-8 relative z-10" alt="Freezer">
+                        
+                        <h3 class="text-3xl md:text-3xl font-black text-gold text-gold-glow serif relative z-20 translate-y-11 whitespace-nowrap" data-i18n="prize_grand_name">名牌冰箱</h3>
+                        <p class="text-base md:text-lg text-cream mt-2 relative z-20 translate-y-10" data-i18n="prize_grand_desc">容量超大，装满福气</p>
+                    </div>
+
+                    <div class="order-3 md:order-3 prize-stage p-6 pb-12 flex flex-col items-center justify-end h-64 md:h-80 relative">
+                         <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-4 z-20">
+                             <span class="prize-label text-sm md:text-base whitespace-nowrap" data-i18n="prize_2">二等奖</span>
+                        </div>
+                        <img src="steamer.png" class="translate-y-6 w-44 md:w-56 h-auto object-contain mb-4 drop-shadow-2xl transition hover:scale-110 duration-300" alt="Steamer">
+                        <h3 class="text-2xl font-bold text-cream serif translate-y-6" data-i18n="prize_2_name">多功能电蒸炉</h3>
+                        <p class="text-sm text-white/70 mt-1 translate-y-6" data-i18n="prize_2_desc">蒸蒸日上，鲜味十足</p>
+                    </div>
+                </div>
+
+                <div class="gsap-reveal grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                    <div class="prize-stage p-4 flex flex-col items-center justify-center h-40 md:h-48 md:col-span-2">
+                        <span class="prize-label text-xs mb-2" data-i18n="prize_3">三等奖</span>
+                        <img src="hotpot.png" class="w-32 md:w-36 h-auto mb-2" alt="Hot Pot">
+                        <p class="font-bold text-base md:text-lg" data-i18n="prize_3_name">精美电火锅</p>
+                    </div>
+                    <div class="prize-stage p-4 flex flex-col items-center justify-center h-40 md:h-48 md:col-span-2">
+                         <span class="prize-label text-xs mb-2" data-i18n="prize_consol">安慰奖 x5</span>
+                         <img src="angpao.png" class="w-24 md:w-28 h-auto mb-2 drop-shadow-md" alt="Angpao">
+                        <p class="font-bold text-base md:text-lg" data-i18n="prize_consol_name">RM20 购物礼券</p>
+                    </div>
+                </div>
+
+                <div class="mt-8 text-cream/50 text-xs text-center" data-i18n="tnc_note">
+                    *需符合条规 (T&Cs Apply). 图片仅供参考，以实物为准。
+                </div>
+            </div>
+        </section>
+
+        <section class="relative bg-[#fffdf5] pb-24 pt-32">
+            
+            <div class="absolute top-0 left-0 w-full overflow-hidden leading-none z-10" style="transform: translateY(-99%);">
+                <svg class="relative block w-full h-[50px] md:h-[80px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 100" preserveAspectRatio="none">
+                    <path d="M0,0 C300,5 450,85 600,85 C750,85 900,5 1200,0 V100 H0 Z" fill="#fffdf5"></path>
+                    <path d="M600,85 L588,65 L612,65 Z" fill="#dda624" class="animate-bounce" style="transform-origin: center; animation-duration: 2s;"></path>
+                </svg>
+            </div>
+
+            <div class="container mx-auto px-4 max-w-6xl relative z-20">
+                
+                <div class="text-center mb-12 md:mb-16 gsap-reveal">
+                    <p class="text-[#8B0000] font-bold tracking-[0.2em] text-sm md:text-base mb-2">SERVICE HIGHLIGHTS</p>
+                    <h2 class="text-3xl md:text-5xl font-black text-[#8B0000] serif">
+                        <span data-i18n="why_choose">为什么选择</span> <span class="text-[#dda624]" data-i18n="brand_name_short">海成发？</span>
+                    </h2>
+                    <div class="w-16 h-1 bg-[#dda624] mx-auto mt-4"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-stretch">
+                    
+                    <div class="gsap-reveal bg-white border border-gray-100 rounded-2xl p-6 md:p-10 shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col items-center text-center group relative">
+                        <img src="angpao_hsh.png" class="absolute z-20 pointer-events-none drop-shadow-2xl w-28 md:w-32 -top-6 -right-4 rotate-12 lg:w-60 lg:-top-20 lg:-left-16 lg:right-auto lg:-rotate-12 animate-bounce" style="animation-duration: 3s;" alt="Angpao">
+                        <img src="card.png" class="absolute z-20 pointer-events-none drop-shadow-xl w-24 md:w-28 -top-5 -left-3 -rotate-6 lg:w-48 lg:top-auto lg:left-auto lg:-bottom-12 lg:-right-12 lg:rotate-12 animate-pulse" style="animation-duration: 4s;" alt="Greeting Card">
+
+                        <div class="w-16 h-16 md:w-20 md:h-20 mb-6 rounded-full bg-red-50 flex items-center justify-center text-[#8B0000] group-hover:scale-110 transition-transform duration-300 mt-4 relative z-10">
+                                <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                        </div>
+                        <h3 class="text-lg md:text-xl font-bold text-gray-800 mb-2 font-festive tracking-wide relative z-10" data-i18n="svc_1_title">01. 送礼体面又大方</h3>
+                        <p class="text-xs md:text-sm text-gray-500 leading-relaxed relative z-10">
+                            <span data-i18n="svc_1_desc">随配套赠送独家</span><span class="text-[#8B0000] font-bold" data-i18n="svc_1_highlight">高端精美保温袋</span><span data-i18n="svc_1_desc_end">、精美新年红包封、贺年卡。</span><br>
+                            <span class="text-[10px] text-gray-400 mt-1 block" data-i18n="svc_1_note">(送完即止，送礼自用都合适)</span>
+                        </p>
+                    </div>
+
+                    <div class="gsap-reveal bg-white border-2 border-[#dda624] rounded-2xl p-6 md:p-10 shadow-[0_10px_30px_rgba(221,166,36,0.15)] flex flex-col items-center text-center relative overflow-hidden group transform md:-translate-y-4">
+                        <div class="absolute top-0 right-0 bg-[#dda624] text-white text-[10px] md:text-xs font-bold px-3 py-1 rounded-bl-lg" data-i18n="svc_rec">
+                            推荐
+                        </div>
+                        <div class="w-16 h-16 md:w-20 md:h-20 mb-6 rounded-full bg-gold/20 flex items-center justify-center text-[#dda624] group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <h3 class="text-xl md:text-2xl font-black text-[#dda624] mb-3 font-festive tracking-wide" data-i18n="svc_2_title">02. 免运费 · 选日期</h3>
+                        <div class="w-8 h-[2px] bg-gray-200 mb-4"></div>
+                        <p class="text-sm md:text-base text-gray-600 font-bold leading-relaxed mb-1">
+                            <span data-i18n="svc_2_region">全西马</span> <span class="text-[#dda624]">FREE SHIPPING</span>
+                        </p>
+                        <p class="text-xs md:text-sm text-gray-500 leading-relaxed">
+                            <span data-i18n="svc_2_desc_1">提前规划年货，</span><span class="border-b border-[#dda624]" data-i18n="svc_2_desc_2">自选收货日期</span>。<br><span data-i18n="svc_2_desc_3">轻松等过年，无需担心物流问题。</span>
+                        </p>
+                    </div>
+
+                    <div class="gsap-reveal bg-gradient-to-b from-red-50 to-white border border-red-200 rounded-2xl p-6 md:p-10 shadow-lg flex flex-col items-center text-center group relative">
+                         <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(#dda624 1px, transparent 1px); background-size: 20px 20px;"></div>
+                        
+                        <div class="w-16 h-16 md:w-20 md:h-20 mb-6 rounded-full bg-[#8B0000] flex items-center justify-center text-white shadow-lg animate-pulse">
+                            <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path></svg>
+                        </div>
+                        <h3 class="text-xl md:text-2xl font-black text-[#8B0000] mb-3 font-festive tracking-wide" data-i18n="svc_3_title">03. 自动参加大抽奖</h3>
+                        <div class="w-8 h-[2px] bg-red-200 mb-4"></div>
+                        <p class="text-sm md:text-base text-gray-800 font-bold leading-relaxed mb-1">
+                            <span data-i18n="svc_3_desc_1">凡购买 2026《年年有鱼》</span>
+                        </p>
+                        <p class="text-xs md:text-sm text-gray-600 leading-relaxed">
+                            <span data-i18n="svc_3_desc_2">无需额外报名，自动获得</span><br><span class="bg-[#dda624] text-white px-1 rounded" data-i18n="svc_3_highlight">开运抽奖机会</span><span data-i18n="svc_3_desc_3">，把福气带回家！</span>
+                        </p>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+
+
+        <section class="py-24 relative bg-[#fffdf5] overflow-hidden">
+            
+            <div class="absolute top-10 left-1/2 -translate-x-1/2 text-[6rem] md:text-[10rem] font-black text-red-900/5 pointer-events-none serif leading-none whitespace-nowrap select-none">
+                GOOGLE REVIEWS
+            </div>
+
+            <div class="container mx-auto px-4 max-w-6xl relative z-10">
+                
+                <div class="text-center mb-16 gsap-reveal">
+                    <div class="inline-flex items-center justify-center space-x-1 text-[#dda624] mb-4">
+                        <svg class="w-6 h-6 mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"/></svg>
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <h2 class="text-3xl md:text-5xl font-black text-[#8B0000] serif mb-4">
+                        <span data-i18n="review_title">真实口碑</span> • <span class="text-[#dda624]" data-i18n="review_google">Google 好评</span>
+                    </h2>
+                    <p class="text-gray-500 text-lg" data-i18n="review_subtitle">看看大家亲身体验后的真实评价</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-start">
+                    
+                    <div class="gsap-reveal bg-white p-8 rounded-2xl shadow-lg border border-gray-100 relative group hover:-translate-y-1 transition-transform duration-300">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-xl font-bold text-blue-600 mr-4">G</div>
+                            <div>
+                                <div class="font-bold text-gray-800">Greyson Lip</div>
+                                <div class="text-[#dda624] text-xs flex">★★★★★ <span class="text-gray-400 ml-2">Google Review</span></div>
+                            </div>
+                        </div>
+
+                        <p class="text-gray-600 leading-relaxed text-sm md:text-base line-clamp-5 mb-4" data-i18n="review_text_1">
+                            I saw the Google reviews were pretty good, so without much thinking, I grabbed my things and drove 1 hour 45 minutes from KL to Sekinchan just to experience buying seafood straight from a seaside fish market...
+                        </p>
+
+                        <a href="https://www.google.com/search?q=hai+seng+huat" target="_blank" class="inline-flex items-center text-[#dda624] font-bold text-sm hover:text-[#8B0000] transition-colors mt-auto">
+                            <span data-i18n="review_read_more">Read More on Google</span>
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                        </a>
+                    </div>
+
+                    <div class="gsap-reveal bg-white p-8 rounded-2xl shadow-[0_10px_30px_rgba(221,166,36,0.15)] border-2 border-[#dda624]/20 relative group hover:-translate-y-1 transition-transform duration-300 md:-mt-4">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-xl font-bold text-green-600 mr-4">C</div>
+                            <div>
+                                <div class="font-bold text-gray-800">Chui yee Guan</div>
+                                <div class="text-[#dda624] text-xs flex">★★★★★ <span class="text-gray-400 ml-2">Google Review</span></div>
+                            </div>
+                        </div>
+
+                        <p class="text-gray-600 leading-relaxed text-sm md:text-base line-clamp-5 mb-4" data-i18n="review_text_2">
+                            <span class="bg-red-50 text-[#8B0000] px-1 font-bold">Repeat customer.</span> Great variety of fish at reasonable price. Fish is fresh. Cleaning and scaling was done thoroughly and properly...
+                        </p>
+
+                        <a href="https://www.google.com/search?q=hai+seng+huat" target="_blank" class="inline-flex items-center text-[#dda624] font-bold text-sm hover:text-[#8B0000] transition-colors mt-auto">
+                            <span data-i18n="review_read_more">Read More on Google</span>
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                        </a>
+                    </div>
+
+                    <div class="gsap-reveal bg-white p-8 rounded-2xl shadow-lg border border-gray-100 relative group hover:-translate-y-1 transition-transform duration-300">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-xl font-bold text-purple-600 mr-4">Y</div>
+                            <div>
+                                <div class="font-bold text-gray-800">Yee Laine Tan</div>
+                                <div class="text-[#dda624] text-xs flex">★★★★★ <span class="text-gray-400 ml-2">Google Review</span></div>
+                            </div>
+                        </div>
+
+                        <p class="text-gray-600 leading-relaxed text-sm md:text-base line-clamp-5 mb-4" data-i18n="review_text_3">
+                            These are A & B+ Ming har varieties. Red hue prawns. <span class="font-bold text-[#8B0000]">Very fresh & juicy.</span> Wild caught legit, not farmed...
+                        </p>
+
+                         <a href="https://www.google.com/search?q=hai+seng+huat" target="_blank" class="inline-flex items-center text-[#dda624] font-bold text-sm hover:text-[#8B0000] transition-colors mt-auto">
+                            <span data-i18n="review_read_more">Read More on Google</span>
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        
+        <section class="relative bg-gradient-to-br from-[#932725] to-[#7a1f1d] pt-36 md:pt-64 pb-24 text-white overflow-hidden">
+            
+            <div class="absolute top-0 left-0 w-full h-[80px] md:h-[150px] z-10 pointer-events-none">
+                <svg class="absolute top-0 left-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100">
+                    <path d="M0 0 L100 0 L100 20 L50 90 L0 20 Z" fill="#7a1f1d" opacity="0.5"></path>
+                </svg>
+                <svg class="absolute top-0 left-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100">
+                    <polygon points="0,0 100,0 100,15 50,85 0,15" fill="#fffdf5"></polygon>
+                </svg>
+            </div>
+
+            <div class="container mx-auto px-4 max-w-6xl relative z-20">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    
+                    <div class="gsap-reveal text-center lg:text-left order-2 lg:order-1">
+                        <h2 class="text-3xl md:text-5xl font-black mb-6 serif leading-tight">
+                            <span class="text-[#dda624]" data-i18n="del_date_start">2026年 2月1日</span> <span data-i18n="del_title_1">起</span><br>
+                            <span data-i18n="del_title_2">开始配送</span><br>
+                            <span data-i18n="del_title_3">自选配送日期</span>
+                        </h2>
+                        
+                        <p class="text-lg md:text-xl text-cream/90 mb-8 leading-relaxed font-light">
+                            <span data-i18n="del_desc_1">确保佳节餐桌，新鲜准时到家</span><br>
+                            <span data-i18n="del_desc_2">无需拥挤，无需等待，我们为您锁住大海的鲜味。</span>
+                        </p>
+
+                        <a href="#collections" onclick="document.querySelector('#collections').scrollIntoView({behavior: 'smooth'}); return false;" class="group inline-flex items-center justify-center bg-white text-[#932725] hover:bg-[#dda624] hover:text-[#8B0000] font-bold py-3 px-6 text-base md:py-4 md:px-8 md:text-xl rounded-full transition-all duration-300 shadow-[0_10px_20px_rgba(0,0,0,0.3)] hover:shadow-[0_20px_40px_rgba(221,166,36,0.4)] transform hover:-translate-y-1">
+                            <span data-i18n="cta_main">立即下单，把好兆头带回家！</span>
+                            <svg class="w-5 h-5 md:w-6 md:h-6 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+                        </a>
+                    </div>
+
+                    <div class="gsap-reveal order-1 lg:order-2 flex justify-center">
+                        <div class="relative bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-6 md:p-8 w-full max-w-md shadow-2xl transform rotate-2 hover:rotate-0 transition-transform duration-500">
+                            
+                            <div class="flex justify-between items-end mb-6 border-b border-white/10 pb-4">
+                                <div>
+                                    <p class="text-[#dda624] font-bold tracking-widest text-sm uppercase">Delivery Period</p>
+                                    <h3 class="text-3xl font-black font-festive text-white" data-i18n="cal_month">2026 二月</h3>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-4xl font-bold font-price text-white/20">02</span>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-7 gap-2 text-center text-sm md:text-base mb-4">
+                                <div class="text-[#dda624] font-bold py-2" data-i18n="day_sun">日</div>
+                                <div class="text-white/50 py-2" data-i18n="day_mon">一</div>
+                                <div class="text-white/50 py-2" data-i18n="day_tue">二</div>
+                                <div class="text-white/50 py-2" data-i18n="day_wed">三</div>
+                                <div class="text-white/50 py-2" data-i18n="day_thu">四</div>
+                                <div class="text-white/50 py-2" data-i18n="day_fri">五</div>
+                                <div class="text-white/50 py-2" data-i18n="day_sat">六</div>
+                            </div>
+                            
+                            <div class="grid grid-cols-7 gap-2 text-center font-medium">
+                                <div class="aspect-square flex items-center justify-center bg-[#dda624] text-[#8B0000] rounded-full shadow-lg font-bold scale-110 relative group cursor-default">
+                                    1
+                                    <span class="absolute -top-8 left-1/2 -translate-x-1/2 bg-white text-[#932725] text-[10px] px-2 py-1 rounded shadow-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap" data-i18n="cal_start">开始配送</span>
+                                </div>
+                                <div class="aspect-square flex items-center justify-center bg-[#dda624]/80 text-[#8B0000] rounded-full">2</div>
+                                <div class="aspect-square flex items-center justify-center bg-[#dda624]/80 text-[#8B0000] rounded-full">3</div>
+                                <div class="aspect-square flex items-center justify-center bg-[#dda624]/80 text-[#8B0000] rounded-full">4</div>
+                                <div class="aspect-square flex items-center justify-center bg-[#dda624]/80 text-[#8B0000] rounded-full">5</div>
+                                <div class="aspect-square flex items-center justify-center bg-[#dda624]/80 text-[#8B0000] rounded-full">6</div>
+                                <div class="aspect-square flex items-center justify-center bg-[#dda624]/80 text-[#8B0000] rounded-full">7</div>
+                                
+                                <div class="aspect-square flex items-center justify-center bg-[#dda624]/80 text-[#8B0000] rounded-full">8</div>
+                                <div class="aspect-square flex items-center justify-center bg-[#dda624]/80 text-[#8B0000] rounded-full">9</div>
+                                <div class="aspect-square flex items-center justify-center bg-[#dda624]/80 text-[#8B0000] rounded-full">10</div>
+                                <div class="aspect-square flex items-center justify-center bg-[#dda624]/80 text-[#8B0000] rounded-full">11</div>
+                                <div class="aspect-square flex items-center justify-center bg-[#dda624]/80 text-[#8B0000] rounded-full">12</div>
+                                <div class="aspect-square flex items-center justify-center bg-[#dda624] text-[#8B0000] rounded-full shadow-lg font-bold scale-110 relative group cursor-default">
+                                    13
+                                    <span class="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-white text-[#932725] text-[10px] px-2 py-1 rounded shadow-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap" data-i18n="cal_end">最后发货</span>
+                                </div>
+                                <div class="aspect-square flex items-center justify-center text-white/30">14</div>
+                                </div>
+                            
+                            <div class="mt-4 flex items-center justify-center text-xs text-white/60 gap-4">
+                                <div class="flex items-center"><div class="w-3 h-3 bg-[#dda624] rounded-full mr-2"></div> <span data-i18n="cal_legend_avail">可选配送日期</span></div>
+                                <div class="flex items-center"><div class="w-3 h-3 bg-white/30 rounded-full mr-2"></div> <span data-i18n="cal_legend_unavail">不发货/休息</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="pt-24 pb-8 md:py-24 relative">
+            <div class="container mx-auto px-6 relative z-10 text-center">
+                
+                <div class="gsap-reveal mb-12">
+                    <h2 class="text-3xl font-bold text-gold mb-6 serif" data-i18n="loc_title">我们的位置</h2>
+                    
+                    <p class="text-cream/90 text-lg mb-8 px-4">
+                        No.237, Lorong 6 Jalan Tepi Laut, Bagan Sekinchan, 45400 Sekinchan, Selangor
+                    </p>
+
+                    <div class="w-full max-w-4xl mx-auto h-[400px] bg-gray-800 rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] relative mb-8 border-4 border-white">
+                        <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" title="Hai Seng Huat Location" src="https://maps.google.com/maps?q=Hai+Seng+Huat+Fishery+Sdn+Bhd+Sekinchan&t=k&z=19&ie=UTF8&iwloc=&output=embed" style="filter: contrast(1.1) saturate(1.1);"></iframe>
+                        <div class="absolute inset-0 pointer-events-none border-4 border-white/10 rounded-2xl"></div>
+                    </div>
+                    
+                    <div class="text-center">
+                         <a href="https://www.google.com/maps/search/?api=1&query=Hai+Seng+Huat+Fishery+Sdn+Bhd+Sekinchan" target="_blank" class="inline-flex items-center text-gold hover:text-white border-b border-gold pb-1 transition-colors text-sm tracking-widest uppercase">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                            <span data-i18n="loc_open_map">在 Google Maps App 中打开</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="gsap-reveal bg-gold/10 border border-gold/30 rounded-2xl p-6 md:p-10 max-w-3xl mx-auto backdrop-blur-md">
+                    <h2 class="text-3xl md:text-5xl font-black text-gold mb-4 md:mb-6 text-gold-glow" data-i18n="contact_title">客服</h2>
+                    <p class="text-cream text-base md:text-lg mb-6 md:mb-8" data-i18n="contact_desc">任何疑问 请联系客服</p>
+                    
+                    <a href="https://wa.me/60106692836" target="_blank" class="inline-flex items-center justify-center bg-[#25D366] hover:bg-[#128C7E] text-white font-bold py-3 px-6 text-base md:py-4 md:px-10 md:text-xl rounded-full transition transform hover:scale-105 shadow-lg w-full md:w-auto">
+                        <svg class="w-5 h-5 md:w-6 md:h-6 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                        WhatsApp
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </div> 
+
+
+    <section class="pt-8 pb-16 md:py-16 bg-[#5c1816] relative border-t border-white/10">
+            <div class="container mx-auto px-6 max-w-4xl">
+                
+                <div class="text-center mb-8 md:mb-10">
+                    <h2 class="text-2xl md:text-3xl font-bold text-[#dda624] serif mb-2" data-i18n="tnc_title">订购须知</h2>
+                    <div class="w-12 h-0.5 bg-white/20 mx-auto"></div>
+                </div>
+
+                <div class="grid gap-6 text-sm md:text-base text-[#e5e5e5] leading-relaxed">
+                    
+                    <div class="flex items-start">
+                        <span class="text-[#dda624] mr-3 mt-1 text-lg">•</span>
+                        <p>
+                            <strong class="text-white block mb-1" data-i18n="tnc_1_title">冷冻保存提示</strong>
+                            <span data-i18n="tnc_1_desc">本新春配套为冷冻海鲜产品，收到货后请务必<span class="text-[#dda624] font-bold">保持冷冻状态</span>保存。建议于 <span class="border-b border-white/30">60 天内</span> 食用完毕，以确保最佳的鲜味与品质。</span>
+                        </p>
+                    </div>
+
+                    <div class="flex items-start">
+                        <span class="text-[#dda624] mr-3 mt-1 text-lg">•</span>
+                        <p>
+                            <strong class="text-white block mb-1" data-i18n="tnc_2_title">物流配送说明</strong>
+                            <span data-i18n="tnc_2_desc">新春前夕为物流高峰期，虽我们已提前安排配送，但仍可能因物流量剧增而出现 <span class="text-[#dda624] font-bold">1–2 天的延误</span>，敬请谅解。配送时间由物流伙伴统一安排，送货时段通常为 <span class="font-bold">8:00AM – 12:00AM</span>（恕无法指定具体几点送达）。</span>
+                        </p>
+                    </div>
+
+                    <div class="flex items-start">
+                        <span class="text-[#dda624] mr-3 mt-1 text-lg">•</span>
+                        <p>
+                            <strong class="text-white block mb-1" data-i18n="tnc_3_title">订单确认政策</strong>
+                            <span data-i18n="tnc_3_desc">由于新春货源紧张，订单一经确认后，<span class="text-red-300">恕不接受取消、退款或更改收货日期</span>。请您在下单前仔细确认您的配送安排与收货信息。</span>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+    <footer class="relative bg-[#851d1b] border-t-8 border-gold shadow-[0_-10px_30px_rgba(0,0,0,0.3)] pt-12 pb-8 text-center text-cream/80">
+        <h2 class="text-2xl md:text-4xl font-black text-gold mb-4 serif text-gold-glow relative z-20" data-i18n="footer_title">海成发 Hai Seng Huat</h2>
+        <p class="text-sm md:text-lg mb-4 uppercase tracking-widest relative z-20" data-i18n="footer_subtitle">Sekinchan • 适耕庄第一手海鲜</p>
+        <p class="text-xs md:text-sm relative z-20">© 2026 Hai Seng Huat Fishery. All rights reserved.</p>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // ===============================================
+        // 语言切换逻辑
+        // ===============================================
+        let currentLang = 'zh';
+
+        const translations = {
+            // Hero Section
+            "hero_year": { zh: "2026 年年有鱼", en: "2026 Abundance Year" },
+            "hero_cny": { zh: "新春", en: "CNY" },
+            "hero_seafood": { zh: "海鲜", en: "Seafood" },
+            "hero_package": { zh: "配套", en: "Sets" },
+            "hero_draw": { zh: "消费抽大奖", en: "Spend & Win Big" },
+            "hero_desc_1": { zh: "海成发带着满满鲜气， <br> 为您送上新春配套啦！", en: "Hai Seng Huat brings you the freshest <br> Chinese New Year seafood packages!" },
+            "hero_desc_2": { zh: "凡购买配套，便有机会把", en: "Purchase any set for a chance to win" },
+            "hero_desc_3": { zh: "超值好康", en: "Amazing Prizes" },
+            "hero_desc_4": { zh: "带回家！", en: "!" },
+            "hero_tagline": { zh: "把大海的鲜味，变成全家人的福气。", en: "Turning the ocean's freshness into blessings for your family." },
+            "scroll_more": { zh: "下滑了解更多", en: "SCROLL FOR MORE" },
+
+            // Collection Section
+            "section_selection": { zh: "新春甄选", en: "Selections" },
+            "section_bundle": { zh: "发财大礼包", en: "Prosperity Bundles" },
+            "pkg_a_tab": { zh: "配套 A", en: "Set A" },
+            "pkg_b_tab": { zh: "配套 B", en: "Set B" },
+            "pkg_c_tab": { zh: "配套 C", en: "Set C" },
+            "pkg_d_tab": { zh: "拾鲜围炉", en: "Steamboat" },
+            "order_btn": { zh: "网站下单", en: "Order Online" },
+
+            // Lucky Draw Section
+            "draw_badge": { zh: "一年一次的好机会！", en: "Once a Year Opportunity!" },
+            "draw_title_1": { zh: "新春海鲜", en: "CNY Seafood" },
+            "draw_title_2": { zh: "开运抽奖活动", en: "Lucky Draw Event" },
+            "draw_subtitle": { zh: "奖品乱乱送，赢家可能就是你", en: "Prizes Galore, You Could Be The Winner" },
+            "draw_how": { zh: "如何参加：", en: "How to Join:" },
+            "draw_rule_1": { zh: "凡是购买", en: "Purchase any" },
+            "draw_rule_2": { zh: "2026年年有鱼新春配套", en: "2026 Prosperity Seafood Set" },
+            "draw_rule_3": { zh: "即可获得一次", en: "to get one" },
+            "draw_rule_4": { zh: "开运抽奖机会", en: "Lucky Draw Entry" },
+            "prize_1": { zh: "一等奖", en: "1st Prize" },
+            "prize_1_name": { zh: "空气炸锅", en: "Air Fryer" },
+            "prize_1_desc": { zh: "健康美味，轻松搞定", en: "Healthy cooking made easy" },
+            "prize_grand": { zh: "特等奖", en: "Grand Prize" },
+            "prize_grand_name": { zh: "名牌冰箱", en: "Premium Fridge" },
+            "prize_grand_desc": { zh: "容量超大，装满福气", en: "Massive capacity for prosperity" },
+            "prize_2": { zh: "二等奖", en: "2nd Prize" },
+            "prize_2_name": { zh: "多功能电蒸炉", en: "Electric Steamer" },
+            "prize_2_desc": { zh: "蒸蒸日上，鲜味十足", en: "Rise to prosperity with flavor" },
+            "prize_3": { zh: "三等奖", en: "3rd Prize" },
+            "prize_3_name": { zh: "精美电火锅", en: "Electric Hotpot" },
+            "prize_consol": { zh: "安慰奖 x5", en: "Consolation x5" },
+            "prize_consol_name": { zh: "RM20 购物礼券", en: "RM20 Voucher" },
+            "tnc_note": { zh: "*需符合条规 (T&Cs Apply). 图片仅供参考，以实物为准。", en: "*T&Cs Apply. Images are for illustration purposes only." },
+
+            // Service Highlights
+            "why_choose": { zh: "为什么选择", en: "Why Choose" },
+            "brand_name_short": { zh: "海成发？", en: "HSH?" },
+            "svc_1_title": { zh: "01. 送礼体面又大方", en: "01. Premium Gifting" },
+            "svc_1_desc": { zh: "随配套赠送独家", en: "Includes exclusive " },
+            "svc_1_highlight": { zh: "高端精美保温袋", en: "Cooler Bag" },
+            "svc_1_desc_end": { zh: "、精美新年红包封、贺年卡。", en: ", Angpao packets & Greeting Card." },
+            "svc_1_note": { zh: "(送完即止，送礼自用都合适)", en: "(While stocks last, perfect for gifting)" },
+            "svc_rec": { zh: "推荐", en: "Recommended" },
+            "svc_2_title": { zh: "02. 免运费 · 选日期", en: "02. Free Ship · Pick Date" },
+            "svc_2_region": { zh: "全西马", en: "West Msia" },
+            "svc_2_desc_1": { zh: "提前规划年货，", en: "Plan ahead, " },
+            "svc_2_desc_2": { zh: "自选收货日期", en: "Choose Delivery Date" },
+            "svc_2_desc_3": { zh: "轻松等过年，无需担心物流问题。", en: "Relax and wait for CNY, worry-free." },
+            "svc_3_title": { zh: "03. 自动参加大抽奖", en: "03. Auto Lucky Draw" },
+            "svc_3_desc_1": { zh: "凡购买 2026《年年有鱼》", en: "With every Prosperity Set purchase" },
+            "svc_3_desc_2": { zh: "无需额外报名，自动获得", en: "No registration needed, get automatic" },
+            "svc_3_highlight": { zh: "开运抽奖机会", en: "Lucky Draw Entry" },
+            "svc_3_desc_3": { zh: "，把福气带回家！", en: " and win big!" },
+
+            // Reviews
+            "review_title": { zh: "真实口碑", en: "Real Reviews" },
+            "review_google": { zh: "Google 好评", en: "Google Rated" },
+            "review_subtitle": { zh: "看看大家亲身体验后的真实评价", en: "See what our customers have to say" },
+            "review_read_more": { zh: "Read More on Google", en: "Read More on Google" }, // Keep English for Google
+            "review_text_1": { 
+                zh: "我看到Google评论不错，就开车从吉隆坡到适耕庄... 我是唯一的顾客，感觉像做梦一样。价格非常便宜，真的是从海里直接上来的... 我买了一箱20多条鱼才RM300+。非常值得。",
+                en: "I saw the Google reviews were pretty good, so without much thinking, I drove from KL to Sekinchan... Prices were extremely cheap, as expected when it’s straight from the sea... I bought a medium-sized box filled with 20+ fish for just RM300+. Very worth it."
+            },
+            "review_text_2": { 
+                zh: "回头客。鱼类品种多，价格合理，非常新鲜。清理和去鳞都很彻底... 他们的网站上有详细的鱼类描述，对新手很有帮助。在线订购体验也很棒，发货前一天会有通知。",
+                en: "Repeat customer. Great variety of fish at reasonable price. Fish is fresh. Cleaning and scaling was done thoroughly... Do check out their website for promotions. Thumbs up to their customer service for online order too!"
+            },
+            "review_text_3": { 
+                zh: "A级和B+级明虾，非常新鲜多汁。真正的野生捕捞，不是养殖的... 卖家反应很快。为了健康干杯！",
+                en: "These are A & B+ Ming har varieties. Red hue prawns. Very fresh & juicy. Wild caught legit, not farmed. I am very happy with the purchase, seller very responsive too. To better health!"
+            },
+
+            // Delivery Date
+            "del_date_start": { zh: "2026年 2月1日", en: "1st Feb 2026" },
+            "del_title_1": { zh: "起", en: "Onwards" },
+            "del_title_2": { zh: "开始配送", en: "Delivery Starts" },
+            "del_title_3": { zh: "自选配送日期", en: "Pick Your Date" },
+            "del_desc_1": { zh: "确保佳节餐桌，新鲜准时到家", en: "Fresh seafood, delivered on time." },
+            "del_desc_2": { zh: "无需拥挤，无需等待，我们为您锁住大海的鲜味。", en: "No crowds, no waiting. We lock in the ocean's freshness for you." },
+            "cta_main": { zh: "立即下单，把好兆头带回家！", en: "Order Now & Bring Luck Home!" },
+            "cal_month": { zh: "2026 二月", en: "February 2026" },
+            "day_sun": { zh: "日", en: "S" },
+            "day_mon": { zh: "一", en: "M" },
+            "day_tue": { zh: "二", en: "T" },
+            "day_wed": { zh: "三", en: "W" },
+            "day_thu": { zh: "四", en: "T" },
+            "day_fri": { zh: "五", en: "F" },
+            "day_sat": { zh: "六", en: "S" },
+            "cal_start": { zh: "开始配送", en: "Start" },
+            "cal_end": { zh: "最后发货", en: "Last Day" },
+            "cal_legend_avail": { zh: "可选配送日期", en: "Available" },
+            "cal_legend_unavail": { zh: "不发货/休息", en: "Closed/Full" },
+
+            // Location & Contact
+            "loc_title": { zh: "我们的位置", en: "Our Location" },
+            "loc_open_map": { zh: "在 Google Maps App 中打开", en: "Open in Google Maps" },
+            "contact_title": { zh: "客服", en: "Contact Us" },
+            "contact_desc": { zh: "任何疑问 请联系客服", en: "Any questions? Chat with us!" },
+
+            // T&C
+            "tnc_title": { zh: "订购须知", en: "Important Notes" },
+            "tnc_1_title": { zh: "冷冻保存提示", en: "Freezer Storage" },
+            "tnc_1_desc": { zh: "本新春配套为冷冻海鲜产品，收到货后请务必<span class='text-[#dda624] font-bold'>保持冷冻状态</span>保存。建议于 <span class='border-b border-white/30'>60 天内</span> 食用完毕，以确保最佳的鲜味与品质。", en: "Keep frozen immediately upon receipt. Best consumed within <span class='border-b border-white/30'>60 days</span> for optimal freshness." },
+            "tnc_2_title": { zh: "物流配送说明", en: "Delivery Info" },
+            "tnc_2_desc": { zh: "新春前夕为物流高峰期，虽我们已提前安排配送，但仍可能因物流量剧增而出现 <span class='text-[#dda624] font-bold'>1–2 天的延误</span>，敬请谅解。配送时间由物流伙伴统一安排，送货时段通常为 <span class='font-bold'>8:00AM – 12:00AM</span>（恕无法指定具体几点送达）。", en: "Due to CNY peak season, please expect <span class='text-[#dda624] font-bold'>1–2 days delay</span>. Delivery time (8am-12am) is arranged by logistics partners and cannot be specified." },
+            "tnc_3_title": { zh: "订单确认政策", en: "Order Policy" },
+            "tnc_3_desc": { zh: "由于新春货源紧张，订单一经确认后，<span class='text-red-300'>恕不接受取消、退款或更改收货日期</span>。请您在下单前仔细确认您的配送安排与收货信息。", en: "Strictly <span class='text-red-300'>no cancellations, refunds, or date changes</span> once confirmed due to high demand. Please check your details carefully." },
+
+            // Footer
+            "footer_title": { zh: "海成发 Hai Seng Huat", en: "Hai Seng Huat Fishery" },
+            "footer_subtitle": { zh: "Sekinchan • 适耕庄第一手海鲜", en: "Sekinchan • First-hand Seafood Source" }
+        };
+
+        // 更新后的 Package Data，包含中英文
+        const packageData = [
+            {
+                id: "A",
+                title: { zh: "年年有鱼 A", en: "Prosperity Set A" },
+                price: "488",
+                desc: { 
+                    zh: "尊贵首选！集齐石斑、斗鲳、海参、鱼鳔等顶级海味。鱼虾俱全，寓意十全十美，为您呈献最豪华的除夕盛宴。", 
+                    en: "Premium Choice! Features Grouper, Pomfret, Sea Cucumber & Maw. A complete seafood feast representing perfection for your reunion dinner."
+                },
+                images: ["488/prawn.png", "488/grouper_89.png", "488/cuttlefish.png", "488/snapper.png", "488/chinese_pomfret_89.png", "488/maw.png", "488/sea_cucumber.png", "488/white_promfret_29.png"],
+                bgText: "A",
+                link: "https://www.haisenghuat.com/product/cny2026prosperity-488"
+            },
+            {
+                id: "B",
+                title: { zh: "年年有鱼 B", en: "Prosperity Set B" },
+                price: "388",
+                desc: {
+                    zh: "经典热销！囊括斗鲳、金鲳、红鲷与马友。多款名贵好鱼一次拥有，煎炸蒸煮样样行，不仅吃得好，更要吃得“鲜”！",
+                    en: "Best Seller! Includes Pomfret, Golden Snapper & Threadfin. A variety of premium fish suitable for all cooking styles."
+                },
+                images: ["388/cuttlefish.png", "388/golden_pf.png", "388/golden_snp.png", "388/cn_pf.png", "388/white_pf.png", "388/prawn.png", "388/4finger_tf.png", "388/maw.png"],
+                bgText: "B",
+                link: "https://www.haisenghuat.com/product/cny2026prosperity-388"
+            },
+            {
+                id: "C",
+                title: { zh: "年年有鱼 C", en: "Prosperity Set C" },
+                price: "298",
+                desc: {
+                    zh: "性价比之王！虽是入门配套，却依然享有斗鲳、红鲷、马友等名鱼。小家庭也能毫无负担地享受满桌鲜味，绝对物超所值。",
+                    en: "Best Value! Includes Pomfret & Snapper. Perfect for small families to enjoy a table full of freshness without breaking the bank."
+                },
+                images: ["298/4finger_threadfin.png", "298/chinese_pomfret.png", "298/cuttlefish.png", "298/golden_pf.png", "298/maw.png", "298/prawn.png", "298/red_snp.png", "298/white_pf.png"],
+                bgText: "C",
+                link: "https://www.haisenghuat.com/product/cny2026prosperity-298"
+            },
+            {
+                id: "D",
+                title: { zh: "拾鲜围炉配套", en: "Steamboat Set" },
+                price: "218",
+                desc: {
+                    zh: "围炉必备！手工鱼丸、鱼滑、酿料与鱼鳔的大集合。真材实料，口感弹牙，为您的新春火锅注入来自大海的鲜甜灵魂。",
+                    en: "Steamboat Essentials! Handmade fish balls, paste, stuffed tofu & fish maw. Authentic ingredients for a soulful hotpot experience."
+                },
+                images: ["218/bean_curd.png", "218/fish_ball.png", "218/fish_bar.png", "218/fish_dumpling.png", "218/fish_paste.png", "218/fish_vage_roll.png", "218/mackerel_meat.png", "218/prawn_meat.png", "218/stuffed_tofu.png", "218/maw.png"],
+                bgText: "D",
+                link: "https://www.haisenghuat.com/product/cny2026reunionsteambot"
+            }
+        ];
+
+        let currentActiveIndex = 0; // Track currently active package
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'zh' ? 'en' : 'zh';
+            
+            // 1. Update Static Text
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[key] && translations[key][currentLang]) {
+                    el.innerHTML = translations[key][currentLang];
+                }
+            });
+
+            // 2. Update Dynamic Package Content (Current Tab)
+            const data = packageData[currentActiveIndex];
+            const titleEl = document.getElementById('pkg-title');
+            const descEl = document.getElementById('pkg-desc');
+            const buyBtn = document.getElementById('pkg-buy-btn');
+
+            if(titleEl) titleEl.innerText = data.title[currentLang];
+            if(descEl) descEl.innerText = data.desc[currentLang];
+            if(buyBtn) buyBtn.innerText = translations['order_btn'][currentLang];
+        }
+
+        // ===============================================
+        // 动画与逻辑
+        // ===============================================
+
+        let mainBagTween = gsap.to("#main-open-bag", {
+            rotation: -20, 
+            yoyo: true, 
+            repeat: -1, 
+            ease: "sine.inOut",
+            duration: 2.5
+        });
+
+        function switchPackage(index, clickedElement) {
+            currentActiveIndex = index; // Update global index
+
+            // 1. 处理 Tab 样式
+            const tabs = document.querySelectorAll('.tab-card');
+            
+            tabs.forEach(tab => {
+                if (tab.classList.contains('active') && tab !== clickedElement) {
+                    gsap.to(tab.querySelector('.bag-closed-img'), { opacity: 0.4, duration: 0.3 });
+                }
+                tab.classList.remove('active');
+                const indicator = tab.querySelector('.tab-indicator');
+                if(indicator) indicator.classList.add('hidden');
+                
+                if (tab !== clickedElement) {
+                        gsap.to(tab.querySelector('.bag-closed-img'), { opacity: 0.4, duration: 0.3 });
+                }
+            });
+
+            clickedElement.classList.add('active');
+            gsap.to(clickedElement.querySelector('.bag-closed-img'), { opacity: 0, duration: 0.3 });
+
+            const activeIndicator = clickedElement.querySelector('.tab-indicator');
+            if(activeIndicator) activeIndicator.classList.remove('hidden');
+
+            // 2. 获取数据 (Use currentLang)
+            const data = packageData[index];
+            
+            const mainBag = document.getElementById('main-open-bag');
+            const titleEl = document.getElementById('pkg-title');
+            const descEl = document.getElementById('pkg-desc');
+            const gridEl = document.getElementById('pkg-img-grid');
+            const bgTextEl = document.getElementById('bg-text');
+            const buyBtn = document.getElementById('pkg-buy-btn');
+
+            const contentElements = [titleEl, descEl, gridEl, bgTextEl];
+
+            gsap.to(mainBag, { opacity: 0, scale: 0.8, duration: 0.2 });
+            
+            gsap.to(contentElements, {
+                y: 20,
+                opacity: 0,
+                duration: 0.2,
+                onComplete: () => {
+                    // Update content using current language
+                    titleEl.innerText = data.title[currentLang];
+                    descEl.innerText = data.desc[currentLang];
+                    bgTextEl.innerText = data.bgText;
+                    if(buyBtn) buyBtn.href = data.link;
+                    gridEl.innerHTML = ''; 
+                    
+                    data.images.forEach((imgSrc, i) => {
+                        const itemHtml = `
+                            <div class="grid-item opacity-0 transform translate-y-4 
+                                        bg-gradient-to-br from-white/20 to-white/5 
+                                        border border-white/20 rounded-xl 
+                                        aspect-square flex items-center justify-center 
+                                        p-1 md:p-4 shadow-lg relative group overflow-hidden">
+                                <div class="absolute inset-0 bg-gold/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                <img src="${imgSrc}" 
+                                    class="h-full w-auto max-w-full object-contain drop-shadow-md transform group-hover:scale-110 transition-transform duration-300" 
+                                    alt="Product Image">
+                            </div>
+                        `;
+                        gridEl.innerHTML += itemHtml;
+                    });
+
+                    gsap.fromTo(contentElements, 
+                        { y: -20, opacity: 0 }, 
+                        { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" }
+                    );
+
+                    const newImages = gridEl.querySelectorAll('.grid-item');
+                    gsap.to(newImages, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.4,
+                        stagger: 0.05, 
+                        ease: "back.out(1.2)",
+                        delay: 0.1
+                    });
+
+                    gsap.fromTo(mainBag, 
+                        { opacity: 0, scale: 0.8, rotation: -30 }, 
+                        { opacity: 0.85, scale: 1, rotation: -10, duration: 0.6, ease: "back.out(1.5)", onComplete: () => {
+                            if(mainBagTween) mainBagTween.kill();
+                            mainBagTween = gsap.to(mainBag, {
+                                rotation: -20, 
+                                yoyo: true, 
+                                repeat: -1, 
+                                ease: "sine.inOut",
+                                duration: 2.5
+                            });
+                        }}
+                    );
+                }
+            });
+        }
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const firstGrid = document.getElementById('pkg-img-grid');
+            if(firstGrid && firstGrid.innerHTML.trim() === "") {
+                packageData[0].images.forEach(imgSrc => {
+                    firstGrid.innerHTML += `
+                        <div class="bg-gradient-to-br from-white/20 to-white/5 border border-white/20 rounded-xl aspect-square flex items-center justify-center p-2 shadow-lg relative group">
+                            <img src="${imgSrc}" class="w-full h-full object-contain drop-shadow-md" alt="Product">
+                        </div>
+                    `;
+                });
+            }
+        });
+
+        // 1. Sparkle 特效
+        const sparkleContainer = document.getElementById('sparkles-container');
+
+        function createSparkle(side) {
+            const sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle-dot');
+            sparkleContainer.appendChild(sparkle);
+
+            const size = Math.random() * 4 + 2; 
+            const yPos = Math.random() * 100;   
+
+            let xPos, duration, scaleMax, yMoveSpeed;
+
+            if (side === 'right') {
+                xPos = Math.random() * 15 + 85; 
+                duration = Math.random() * 1.5 + 0.5; 
+                scaleMax = 1.8; 
+                yMoveSpeed = -150; 
+            } else {
+                xPos = Math.random() * 15;
+                duration = Math.random() * 2.5 + 1.5; 
+                scaleMax = 1.4; 
+                yMoveSpeed = 50; 
+            }
+
+            gsap.set(sparkle, { 
+                width: size, height: size, left: xPos + "%", top: yPos + "%", opacity: Math.random() * 0.5 + 0.2 
+            });
+
+            gsap.to(sparkle, { 
+                opacity: 1, scale: scaleMax, duration: duration, repeat: -1, yoyo: true, ease: "sine.inOut", delay: Math.random() * 2 
+            });
+
+            const scrubAmount = Math.random() * 50 + yMoveSpeed; 
+            gsap.to(sparkle, { 
+                y: `+=${scrubAmount}`, ease: "none", scrollTrigger: { trigger: "body", start: "top top", end: "bottom bottom", scrub: 1 } 
+            });
+        }
+
+        const particlesPerSide = 20; 
+        for (let i = 0; i < particlesPerSide; i++) {
+            createSparkle('left');
+            createSparkle('right');
+        }
+
+        // 2. 滚动 Reveal 动画
+        const reveals = document.querySelectorAll('.gsap-reveal');
+        reveals.forEach((element) => {
+            gsap.to(element, {
+                scrollTrigger: { trigger: element, start: "top 85%", toggleActions: "play none none reverse" },
+                opacity: 1, y: 0, duration: 1, ease: "power3.out"
+            });
+        });
+
+        gsap.to('#scroll-hint', { opacity: 1, duration: 1, delay: 2, ease: "power2.out" });
+
+        // Hero 动画
+        ScrollTrigger.create({
+            trigger: '#hero', start: "bottom center", end: "bottom top", 
+            onEnter: () => {
+                gsap.to('#hero-firecrackers', { opacity: 0, duration: 0.5 });
+                gsap.to('#floating-lanterns-container', { autoAlpha: 1, duration: 0.8 });
+                gsap.fromTo('.lantern', { y: "-150%", opacity: 0 }, { y: "0%", opacity: 1, duration: 1.5, ease: "power3.out", stagger: 0.2 });
+            },
+            onLeaveBack: () => {
+                gsap.to('#hero-firecrackers', { opacity: 1, duration: 0.5 });
+                gsap.to('#floating-lanterns-container', { autoAlpha: 0, duration: 0.5 });
+            }
+        });
+
+        gsap.to(".wave-fixed-container", { y: "0%", duration: 1, ease: "power2.out", scrollTrigger: { trigger: "#hero", start: "bottom 60%", toggleActions: "play none none reverse" } });
+        gsap.to(".wave-front .wave-scroller", { xPercent: -40, ease: "none", scrollTrigger: { trigger: "body", start: "top top", end: "bottom bottom", scrub: 1 } });
+        gsap.to(".wave-back .wave-scroller", { xPercent: -15, ease: "none", scrollTrigger: { trigger: "body", start: "top top", end: "bottom bottom", scrub: 1 } });
+
+    </script>
+</body>
+</html>
