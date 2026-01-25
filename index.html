@@ -210,8 +210,38 @@
         .fc-left { left: 2%; transform-origin: top center; } .fc-right { right: 2%; transform-origin: top center; animation-delay: -1s; }
         @keyframes swing { 0% { transform: rotate(2deg); } 100% { transform: rotate(-2deg); } }
         
-        .btn-gold-solid { background: linear-gradient(to bottom, var(--light-gold), var(--bright-gold), var(--rich-gold)); color: #8B0000; font-weight: 900; border: 2px solid #fff; box-shadow: 0 5px 15px rgba(255, 215, 0, 0.5); transition: 0.3s; text-shadow: 0 1px 1px rgba(255,255,255,0.5); }
-        .btn-gold-solid:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(255, 215, 0, 0.8); background: linear-gradient(to bottom, #fff, var(--bright-gold)); }
+
+        .btn-white-pill {
+            background-color: #ffffff;
+            color: #8B0000; /* 深红色字体 */
+            font-weight: 800; /* 粗体 */
+            border-radius: 9999px; /* 胶囊圆角 */
+            border: none;
+            
+            /* 柔和的阴影 */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); 
+            
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px; /* 文字和箭头的间距 */
+        }
+
+        .btn-white-pill:hover {
+            transform: translateY(-3px); /* 悬浮上浮 */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); /* 加深阴影 */
+            color: #e60012; /* 悬浮时文字变亮红 */
+        }
+
+        /* 箭头动画：悬浮时箭头向右动一点 */
+        .btn-white-pill:hover svg {
+            transform: translateX(4px);
+        }
+        .btn-white-pill svg {
+            transition: transform 0.3s ease;
+        }
+
         .gsap-reveal { opacity: 0; transform: translateY(30px); }
         
         .review-card {
@@ -253,6 +283,45 @@
         }
         footer { position: relative; z-index: 10001; } 
 
+        /* =========================================
+        [新增] 2026 新春海报字体特效 (仿图片风格)
+        ========================================= */
+        .cny-title-style {
+            font-family: 'ZCOOL KuaiLe', cursive; /* 使用已引入的快乐体 */
+            color: #e60012; /* 图片中的喜庆红 */
+            
+            /* 模拟厚重的描边效果 */
+            -webkit-text-stroke: 2px #fff8d6; /* 浅黄色描边 (Webkit内核) */
+            paint-order: stroke fill;
+            
+            /* 多重阴影增加立体感和厚度 */
+            text-shadow: 
+                3px 3px 0 #fff8d6,   /* 向右下的黄边 */
+                -1px -1px 0 #fff8d6, /* 向左上的黄边 */
+                1px -1px 0 #fff8d6,  /* 向右上的黄边 */
+                -1px 1px 0 #fff8d6,  /* 向左下的黄边 */
+                1px 1px 0 #fff8d6,
+                5px 8px 0 rgba(0,0,0,0.2); /* 底部投影 */
+        }
+
+        /* 针对 "2026" 的特殊胶囊样式 (可选，模仿图片左上角的标签) */
+        .year-badge {
+            background-color: #e60012;
+            color: #fff;
+            border: 3px solid #fff;
+            border-radius: 999px;
+            padding: 0px 20px;
+            display: inline-block;
+            transform: rotate(-5deg);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            font-family: 'ZCOOL KuaiLe', cursive;
+            text-shadow: none;
+            -webkit-text-stroke: 0;
+            margin-bottom: 20px;
+        }
+
+
+
     </style>
 </head>
 <body>
@@ -288,59 +357,103 @@
     </div>
 
     <div class="relative z-10 pb-32"> 
-        <section id="hero" class="relative h-screen flex items-center justify-center overflow-hidden">
+        <section id="hero" class="relative h-screen flex flex-col items-center justify-center overflow-hidden">
             <div class="absolute inset-0 z-0">
-                <img src="https://placehold.co/1920x1080/932725/FFD700?text=Background+Photo" class="w-full h-full object-cover opacity-30">
+                <img src="Pre_Pic/CNY-2026_Backdrop.png" class="w-full h-full object-cover opacity-100">
             </div>
-            <div class="relative z-10 text-center px-2 md:px-4 max-w-5xl mx-auto mt-20">
-                
-                <h1 class="gsap-reveal font-black text-gold leading-tight mb-8">
-                    
-                    <span class="block
-                                 text-4xl tracking-tighter      /* Mobile */
-                                 md:text-6xl md:tracking-tight  /* Tablet */
-                                 lg:text-7xl                    /* iPad Pro Landscape (修复) */
-                                 xl:text-8xl xl:tracking-tight  /* Desktop */
-                                 whitespace-nowrap" 
-                          data-i18n="hero_year">2026 年年有鱼</span>
-                    
-                    <span class="serif block mt-2 md:mt-4
-                                 text-3xl 
-                                 md:text-5xl
-                                 lg:text-6xl     /* iPad Pro 稍微调小 */
-                                 xl:text-7xl
-                                 whitespace-nowrap">
-                        <span class="text-white text-gold-glow" data-i18n="hero_cny">新春</span>
-                        <span class="ocean-text-wave" data-i18n="hero_seafood">海鲜</span>
-                        <span class="text-white text-gold-glow" data-i18n="hero_package">配套</span>
-                    </span>
-                    
-                    <span class="ribbon-flow-text block mt-2 md:mt-4
-                                 text-3xl 
-                                 md:text-5xl
-                                 lg:text-5xl    /* iPad Pro 稍微调小 */
-                                 xl:text-6xl" 
-                          data-i18n="hero_draw">消费抽大奖</span>
-                </h1>
 
-                <p class="gsap-reveal text-lg md:text-2xl lg:text-3xl text-cream font-light mb-12 max-w-3xl mx-auto drop-shadow-md leading-relaxed serif px-4">
-                    <span data-i18n="hero_desc_1">海成发带着满满鲜气， <br> 为您送上新春配套啦！</span>
-                    <br>
-                    <span class="block mt-4 md:mt-6">
-                        <span data-i18n="hero_desc_2">凡购买配套，便有机会把</span> <span class="text-gold font-bold text-gold-glow"><br><span data-i18n="hero_desc_3">超值好康</span></span> <span data-i18n="hero_desc_4">带回家！</span>
-                    </span>
-                    <br>
-                    <span class="font-bold text-gold text-gold-glow" data-i18n="hero_tagline">把大海的鲜味，变成全家人的福气。</span>
-                </p>
+            <div class="flex flex-col items-center absolute bottom-0 left-1/2 -translate-x-1/2 z-50 pointer-events-none min-[500px]:hidden">
+                <img src="Pre_Pic/CNY-2026_Speech Bybble - CN.png" 
+                     class="w-28 mb-[-5px] relative z-50 transform -rotate-12 -translate-x-8 translate-y-2" 
+                     alt="Free Gift Bubble CN">
                 
-                <div id="scroll-hint" class="mt-8 md:mt-16 opacity-0" onclick="document.querySelector('#collections').scrollIntoView({behavior: 'smooth'})">
-                    <div class="scroll-hint-wrapper">
-                        <span class="text-gold text-sm md:text-lg tracking-[0.3em] font-light mb-2" data-i18n="scroll_more">下滑了解更多</span>
-                        <svg class="w-6 h-6 md:w-8 md:h-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                        </svg>
+                <img src="Pre_Pic/CNY-2026_Mascot.png" 
+                     class="w-40 relative z-40 drop-shadow-2xl"
+                     alt="Mascot">
+            </div>
+
+            <div class="hidden min-[500px]:flex flex-col items-center absolute bottom-0 left-[2%] lg:left-[-1%] xl:left-[5%] z-50 pointer-events-none">
+                <img src="Pre_Pic/CNY-2026_Speech Bybble - CN.png" 
+                     class="w-40 lg:w-64 mb-[-10px] lg:mb-[-20px] relative z-50" 
+                     alt="Free Gift Bubble CN">
+                
+                <img src="Pre_Pic/CNY-2026_Mascot.png" 
+                     class="w-56 lg:w-[28rem] relative z-40 drop-shadow-2xl"
+                     alt="Mascot">
+            </div>
+
+            <div class="relative z-10 px-2 md:px-4 max-w-[95%] mx-auto w-full flex flex-col justify-center h-full pt-10 pb-20">
+                
+                <div class="text-center w-full mb-4 md:mb-8 relative z-20">
+                    
+                    <h1 class="gsap-reveal leading-tight relative inline-block">
+                        <div class="absolute -top-14 -left-2 md:-top-4 md:-left-12 rotate-[-10deg]">
+                            <span class="year-badge text-lg md:text-3xl px-3 py-1 md:px-5 md:py-1">2026</span>
+                        </div>
+                        
+                        <span class="block cny-title-style
+                                    text-[5.5rem] leading-none tracking-wide     
+                                    md:text-8xl md:tracking-normal 
+                                    lg:text-[9rem]             
+                                    whitespace-nowrap" 
+                            data-i18n="hero_year">年年有鱼</span>
+                        
+                        <span class="block mt-2 md:mt-4 cny-title-style
+                                    text-4xl 
+                                    md:text-7xl
+                                    lg:text-[7rem]
+                                    whitespace-nowrap">
+                            <span data-i18n="hero_cny">新春配套</span>
+                        </span>
+
+                        <div class="absolute -bottom-16 left-1/2 -translate-x-1/2 md:translate-x-0 md:left-auto md:-bottom-12 md:-right-24 rotate-[-3deg] z-50">
+                            <div class="bg-[#e60012] text-white border-[3px] border-white px-4 py-1 md:px-6 md:py-2 rounded-full text-xs md:text-xl font-black shadow-[0_5px_15px_rgba(0,0,0,0.3)] tracking-widest uppercase font-sans whitespace-nowrap transform hover:scale-105 transition-transform">
+                                CNY Seafood Package
+                            </div>
+                        </div>
+                    </h1>
+                </div>
+
+                <div class="gsap-reveal w-full flex justify-center min-[500px]:justify-end min-[500px]:pr-4 lg:pr-10 relative z-30 mt-20">
+                    
+                    <div class="relative w-fit group cursor-default">
+                        
+                        <img src="Pre_Pic/CNY-2026_Speech Bubble - EN.png" 
+                             class="absolute -top-20 -right-4 md:-top-40 md:-right-20 w-28 md:w-56 z-50 drop-shadow-xl animate-bounce" 
+                             style="animation-duration: 3s; animation-delay: 0.5s;"
+                             alt="Free Gift Bubble EN">
+
+                        <div class="bg-gradient-to-b from-[#ff8f00] to-[#ff5100] border-[3px] md:border-[5px] border-[#ffe082] rounded-xl md:rounded-3xl p-3 md:p-6 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex items-end gap-2 md:gap-6 transform md:rotate-[-1deg] group-hover:rotate-0 transition-all duration-300 relative overflow-visible 
+                                    w-[95vw] 
+                                    min-[500px]:w-auto min-[500px]:ml-auto lg:min-w-[750px] 
+                                    justify-around">
+                            
+                            <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] mix-blend-overlay rounded-xl md:rounded-3xl"></div>
+
+                            <div class="flex flex-col items-center relative group/item">
+                                <img src="Pre_Pic/CNY-2026_Red Packets.png" class="w-12 md:w-24 object-contain drop-shadow-md transform transition hover:scale-110 hover:-translate-y-2 duration-300" alt="Red Packets">
+                                <span class="mt-2 bg-red-800 text-[#ffd700] text-[10px] md:text-sm px-2 md:px-3 py-0.5 rounded-full font-bold shadow-sm whitespace-nowrap">精美红包</span>
+                            </div>
+
+                            <div class="flex flex-col items-center relative -mt-8 md:-mt-20 z-10 group/item">
+                                <img src="Pre_Pic/CNY-2026_Cooler Bag.png" class="w-20 md:w-40 object-contain drop-shadow-xl transform transition hover:scale-110 hover:-translate-y-2 duration-300" alt="Cooler Bag">
+                                <span class="mt-2 bg-red-800 text-[#ffd700] text-[10px] md:text-base px-3 py-1 rounded-full font-bold shadow-sm whitespace-nowrap">限量保温袋</span>
+                            </div>
+
+                            <div class="flex flex-col items-center relative group/item">
+                                <img src="Pre_Pic/CNY-2026_Lucky Draw Tickets.png" class="w-12 md:w-24 object-contain drop-shadow-md transform transition hover:scale-110 hover:-translate-y-2 duration-300" alt="Lucky Draw Ticket">
+                                <span class="mt-2 bg-red-800 text-[#ffd700] text-[10px] md:text-sm px-2 md:px-3 py-0.5 rounded-full font-bold shadow-sm whitespace-nowrap">开运抽奖</span>
+                            </div>
+
+                            <div class="flex flex-col items-center relative group/item">
+                                <img src="Pre_Pic/CNY-2026_Greeting Card.png" class="w-12 md:w-24 object-contain drop-shadow-md transform transition hover:scale-110 hover:-translate-y-2 duration-300" alt="Greeting Card">
+                                <span class="mt-2 bg-red-800 text-[#ffd700] text-[10px] md:text-sm px-2 md:px-3 py-0.5 rounded-full font-bold shadow-sm whitespace-nowrap">定制贺卡</span>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
+
             </div>
         </section>
 
@@ -425,9 +538,14 @@
                             尊贵首选！集齐石斑、斗鲳、海参、鱼鳔等顶级海味。鱼虾俱全，寓意十全十美，为您呈献最豪华的除夕盛宴。
                         </p>
 
-                        <a id="pkg-buy-btn" href="#" target="_blank" 
-                            class="btn-gold-solid inline-block text-center py-2 px-8 md:py-4 md:px-12 rounded-xl text-lg md:text-xl w-2/3 md:w-auto relative z-20 mx-auto shadow-xl" data-i18n="order_btn">
-                            网站下单
+                        <a id="pkg-buy-btn" href="#" target="_blank" class="btn-white-pill py-3 px-10 md:py-4 md:px-14 text-lg md:text-xl relative z-20 mx-auto" 
+                            data-i18n="order_btn">
+                            
+                            <span>立即抢购</span>
+                        
+                            <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path>
+                            </svg>
                         </a>
                     </div>
                 </div>
@@ -842,18 +960,6 @@
         let currentLang = 'zh';
 
         const translations = {
-            // Hero Section
-            "hero_year": { zh: "2026 年年有鱼", en: "2026 Abundance Year" },
-            "hero_cny": { zh: "新春", en: "CNY" },
-            "hero_seafood": { zh: "海鲜", en: "Seafood" },
-            "hero_package": { zh: "配套", en: "Sets" },
-            "hero_draw": { zh: "消费抽大奖", en: "Spend & Win Big" },
-            "hero_desc_1": { zh: "海成发带着满满鲜气， <br> 为您送上新春配套啦！", en: "Hai Seng Huat brings you the freshest <br> Chinese New Year seafood packages!" },
-            "hero_desc_2": { zh: "凡购买配套，便有机会把", en: "Purchase any set for a chance to win" },
-            "hero_desc_3": { zh: "超值好康", en: "Amazing Prizes" },
-            "hero_desc_4": { zh: "带回家！", en: "!" },
-            "hero_tagline": { zh: "把大海的鲜味，变成全家人的福气。", en: "Turning the ocean's freshness into blessings for your family." },
-            "scroll_more": { zh: "下滑了解更多", en: "SCROLL FOR MORE" },
 
             // Collection Section
             "section_selection": { zh: "新春甄选", en: "Selections" },
@@ -862,7 +968,7 @@
             "pkg_b_tab": { zh: "配套 B", en: "Set B" },
             "pkg_c_tab": { zh: "配套 C", en: "Set C" },
             "pkg_d_tab": { zh: "拾鲜围炉", en: "Steamboat" },
-            "order_btn": { zh: "网站下单", en: "Order Online" },
+            "order_btn": { zh: "立即抢购", en: "Grab It Now" },
 
             // Lucky Draw Section
             "draw_badge": { zh: "一年一次的好机会！", en: "Once a Year Opportunity!" },
@@ -1157,6 +1263,9 @@
 
 
         document.addEventListener("DOMContentLoaded", () => {
+            const buyBtn = document.getElementById('pkg-buy-btn');
+            if(buyBtn) buyBtn.href = packageData[0].link; 
+            
             const firstGrid = document.getElementById('pkg-img-grid');
             if(firstGrid && firstGrid.innerHTML.trim() === "") {
                 packageData[0].images.forEach(imgSrc => {
