@@ -352,105 +352,121 @@
     </div>
 
     <div class="relative z-10 pb-32"> 
-        <section id="hero" class="relative h-screen flex flex-col items-center justify-center overflow-hidden">
-            <div class="absolute inset-0 z-0">
-                <img src="Pre_Pic/CNY-2026_Backdrop.png" class="w-full h-full object-cover opacity-100">
-            </div>
+        <section id="hero" class="relative h-auto flex flex-col items-center justify-start overflow-hidden pt-20 pb-4 lg:pt-28 lg:pb-8">
+        
+        <div class="absolute inset-0 z-0">
+            <img src="Pre_Pic/CNY-2026_Backdrop.png" class="w-full h-full object-cover opacity-100" alt="CNY Backdrop">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#7a1f1d]/60 via-[#7a1f1d]/10 to-[#7a1f1d]/20"></div>
+        </div>
 
-            <div class="flex flex-col items-center absolute bottom-0 left-1/2 -translate-x-1/2 z-50 pointer-events-none min-[500px]:hidden">
-                <img src="Pre_Pic/CNY-2026_Speech Bybble - CN.png" 
-                     class="w-28 mb-[-5px] relative z-50 transform -rotate-12 -translate-x-8 translate-y-2" 
-                     alt="Free Gift Bubble CN">
+        <div class="container mx-auto px-4 z-10 relative h-auto flex flex-col lg:flex-row items-center lg:items-start justify-between gap-8 lg:gap-8 xl:gap-16">
+
+            <div class="flex flex-col items-center lg:items-start text-center lg:text-left w-full lg:w-5/12 relative z-20">
                 
-                <img src="Pre_Pic/CNY-2026_Mascot.png" 
-                     class="w-40 relative z-40 drop-shadow-2xl"
-                     alt="Mascot">
-            </div>
-
-            <div class="hidden min-[500px]:flex flex-col items-center absolute bottom-0 left-[2%] lg:left-[-1%] xl:left-[5%] z-50 pointer-events-none">
-                <img src="Pre_Pic/CNY-2026_Speech Bybble - CN.png" 
-                     class="w-40 lg:w-64 mb-[-10px] lg:mb-[-20px] relative z-50" 
-                     alt="Free Gift Bubble CN">
-                
-                <img src="Pre_Pic/CNY-2026_Mascot.png" 
-                     class="w-56 lg:w-[28rem] relative z-40 drop-shadow-2xl"
-                     alt="Mascot">
-            </div>
-
-            <div class="relative z-10 px-2 md:px-4 max-w-[95%] mx-auto w-full flex flex-col justify-center h-full pt-10 pb-20">
-                
-                <div class="text-center w-full mb-4 md:mb-8 relative z-20">
-                    
-                    <h1 class="gsap-reveal leading-tight relative inline-block">
-                        <div class="absolute -top-14 -left-2 md:-top-4 md:-left-12 rotate-[-10deg]">
-                            <span class="year-badge text-lg md:text-3xl px-3 py-1 md:px-5 md:py-1">2026</span>
-                        </div>
-                        
-                        <span class="block cny-title-style
-                                    text-[5.5rem] leading-none tracking-wide     
-                                    md:text-8xl md:tracking-normal 
-                                    lg:text-[9rem]             
-                                    whitespace-nowrap" 
-                            data-i18n="hero_year">年年有鱼</span>
-                        
-                        <span class="block mt-2 md:mt-4 cny-title-style
-                                    text-4xl 
-                                    md:text-7xl
-                                    lg:text-[7rem]
-                                    whitespace-nowrap">
-                            <span data-i18n="hero_cny">新春配套</span>
-                        </span>
-
-                        <div class="absolute -bottom-16 left-1/2 -translate-x-1/2 md:translate-x-0 md:left-auto md:-bottom-12 md:-right-24 rotate-[-3deg] z-50">
-                            <div class="bg-[#e60012] text-white border-[3px] border-white px-4 py-1 md:px-6 md:py-2 rounded-full text-xs md:text-xl font-black shadow-[0_5px_15px_rgba(0,0,0,0.3)] tracking-widest uppercase font-sans whitespace-nowrap transform hover:scale-105 transition-transform">
-                                CNY Seafood Package
-                            </div>
-                        </div>
-                    </h1>
+                <div class="mb-2 lg:mb-6">
+                    <span class="year-badge text-xl md:text-4xl px-6 py-1 md:px-8 md:py-2 transform -rotate-6 inline-block shadow-2xl bg-[#e60012] text-white border-[3px] border-white rounded-full">
+                        2026
+                    </span>
                 </div>
 
-                <div class="gsap-reveal w-full flex justify-center min-[500px]:justify-end min-[500px]:pr-4 lg:pr-10 relative z-30 mt-20">
-                    
-                    <div class="relative w-fit group cursor-default">
+                <div class="relative inline-block mb-8">
+                    <h1 class="gsap-reveal leading-none relative z-20 drop-shadow-2xl">
+                         <span class="block cny-title-style whitespace-nowrap
+                                    text-[16vw] md:text-[13vw] lg:text-[7.5rem] xl:text-[9rem]
+                                    leading-[0.9] tracking-tighter" 
+                            data-i18n="hero_year">年年有鱼</span>
                         
-                        <img src="Pre_Pic/CNY-2026_Speech Bubble - EN.png" 
-                             class="absolute -top-20 -right-4 md:-top-40 md:-right-20 w-28 md:w-56 z-50 drop-shadow-xl animate-bounce" 
-                             style="animation-duration: 3s; animation-delay: 0.5s;"
-                             alt="Free Gift Bubble EN">
+                        <span class="block mt-2 cny-title-style whitespace-nowrap
+                                    text-[11vw] md:text-[9vw] lg:text-[5.5rem] xl:text-[6.5rem]
+                                    text-[#FFD700]"
+                              style="-webkit-text-stroke: 2px #8B0000; text-shadow: 3px 3px 0 #8B0000;">
+                            <span data-i18n="hero_cny">新春配套</span>
+                        </span>
+                    </h1>
 
-                        <div class="bg-gradient-to-b from-[#ff8f00] to-[#ff5100] border-[3px] md:border-[5px] border-[#ffe082] rounded-xl md:rounded-3xl p-3 md:p-6 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex items-end gap-2 md:gap-6 transform md:rotate-[-1deg] group-hover:rotate-0 transition-all duration-300 relative overflow-visible 
-                                    w-[95vw] 
-                                    min-[500px]:w-auto min-[500px]:ml-auto lg:min-w-[750px] 
-                                    justify-around">
-                            
-                            <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] mix-blend-overlay rounded-xl md:rounded-3xl"></div>
-
-                            <div class="flex flex-col items-center relative group/item">
-                                <img src="Pre_Pic/CNY-2026_Red Packets.png" class="w-12 md:w-24 object-contain drop-shadow-md transform transition hover:scale-110 hover:-translate-y-2 duration-300" alt="Red Packets">
-                                <span class="mt-2 bg-red-800 text-[#ffd700] text-[10px] md:text-sm px-2 md:px-3 py-0.5 rounded-full font-bold shadow-sm whitespace-nowrap">精美红包</span>
-                            </div>
-
-                            <div class="flex flex-col items-center relative -mt-8 md:-mt-20 z-10 group/item">
-                                <img src="Pre_Pic/CNY-2026_Cooler Bag.png" class="w-20 md:w-40 object-contain drop-shadow-xl transform transition hover:scale-110 hover:-translate-y-2 duration-300" alt="Cooler Bag">
-                                <span class="mt-2 bg-red-800 text-[#ffd700] text-[10px] md:text-base px-3 py-1 rounded-full font-bold shadow-sm whitespace-nowrap">限量保温袋</span>
-                            </div>
-
-                            <div class="flex flex-col items-center relative group/item">
-                                <img src="Pre_Pic/CNY-2026_Lucky Draw Tickets.png" class="w-12 md:w-24 object-contain drop-shadow-md transform transition hover:scale-110 hover:-translate-y-2 duration-300" alt="Lucky Draw Ticket">
-                                <span class="mt-2 bg-red-800 text-[#ffd700] text-[10px] md:text-sm px-2 md:px-3 py-0.5 rounded-full font-bold shadow-sm whitespace-nowrap">开运抽奖</span>
-                            </div>
-
-                            <div class="flex flex-col items-center relative group/item">
-                                <img src="Pre_Pic/CNY-2026_Greeting Card.png" class="w-12 md:w-24 object-contain drop-shadow-md transform transition hover:scale-110 hover:-translate-y-2 duration-300" alt="Greeting Card">
-                                <span class="mt-2 bg-red-800 text-[#ffd700] text-[10px] md:text-sm px-2 md:px-3 py-0.5 rounded-full font-bold shadow-sm whitespace-nowrap">定制贺卡</span>
-                            </div>
-
+                    <div class="absolute -bottom-16 -right-4 lg:-bottom-20 lg:-right-14 z-30 transform rotate-3 hover:rotate-0 transition-transform duration-300 cursor-default">
+                        <div class="year-badge text-xs md:text-sm lg:text-lg px-4 py-1 md:px-6 md:py-2 shadow-[0_10px_20px_rgba(0,0,0,0.3)] bg-[#e60012] text-white border-[3px] border-white rounded-full font-black tracking-wider whitespace-nowrap">
+                            CNY SEAFOOD PACKAGES
                         </div>
                     </div>
                 </div>
 
+                <div class="hidden lg:flex relative items-end justify-start mt-4 lg:-ml-4 xl:-ml-16 pointer-events-none">
+                    <img src="Pre_Pic/CNY-2026_Mascot.png" 
+                         class="w-64 xl:w-80 relative z-10 drop-shadow-2xl -ml-6"
+                         alt="Mascot">
+                </div>
             </div>
-        </section>
+
+            <div class="w-full lg:w-6/12 relative z-30 flex flex-col items-center mt-12 lg:-mt-6">
+                
+                <img src="Pre_Pic/CNY-2026_Speech Bybble - CN.png" 
+                     class="absolute -top-12 -left-4 lg:-top-20 lg:-left-16 z-50 w-36 md:w-44 lg:w-52 drop-shadow-xl transform -rotate-6" 
+                     alt="Free Gift Bubble CN">
+
+                <img src="Pre_Pic/CNY-2026_Speech Bubble - EN.png" 
+                     class="absolute -top-12 -right-4 lg:-top-20 lg:-right-12 z-50 w-36 md:w-48 lg:w-56 drop-shadow-xl transform rotate-6" 
+                     alt="Free Gift Bubble EN">
+
+                <div class="gsap-reveal w-full max-w-[600px] bg-gradient-to-br from-[#fffdf5]/95 via-[#fff0e6]/95 to-[#ffe0b2]/95
+                            border-[4px] border-[#FFD700] rounded-[2.5rem] 
+                            shadow-[0_25px_60px_rgba(0,0,0,0.6),0_0_40px_rgba(255,215,0,0.4)]
+                            p-6 md:p-8 transform transition hover:scale-[1.01] duration-300 relative mt-6 lg:mt-0">
+                    
+                    <div class="absolute top-4 left-4 w-8 h-8 border-t-4 border-l-4 border-[#FFD700]/50 rounded-tl-2xl"></div>
+                    <div class="absolute bottom-4 right-4 w-8 h-8 border-b-4 border-r-4 border-[#FFD700]/50 rounded-br-2xl"></div>
+
+                    <div class="grid grid-cols-2 gap-3 md:gap-5 mt-2">
+                        
+                        <div class="group/item relative overflow-hidden bg-white rounded-3xl border-2 border-red-50 shadow-md hover:shadow-xl transition-all duration-300 col-span-2 md:col-span-1 md:row-span-2 p-2 flex items-center justify-center">
+                            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/diamond-upholstery.png')] opacity-20"></div>
+                            <div class="absolute top-0 right-0 bg-[#FFD700] text-[#8B0000] text-xs font-bold px-3 py-1 rounded-bl-xl z-20">HOT</div>
+                            
+                            <img src="Pre_Pic/CNY-2026_Cooler Bag.png" 
+                                 class="w-[85%] md:w-[90%] lg:w-[115%] max-w-none h-auto object-contain object-center drop-shadow-2xl transform group-hover/item:scale-105 transition-transform duration-500 relative z-10 mx-auto lg:mx-0 lg:-ml-[8%]" 
+                                 alt="Cooler Bag">
+                        </div>
+
+                        <div class="group/item bg-white rounded-2xl border border-red-50 shadow-sm hover:shadow-lg transition-all duration-300 relative hover:-translate-y-1 aspect-square p-1 overflow-visible z-10">
+                            <img src="Pre_Pic/CNY-2026_Red Packets.png" 
+                                 class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] lg:w-[100%] max-w-none object-contain drop-shadow-lg group-hover/item:rotate-6 transition-transform" 
+                                 alt="Red Packets">
+                        </div>
+
+                        <div class="group/item bg-white rounded-2xl border border-red-50 shadow-sm hover:shadow-lg transition-all duration-300 relative hover:-translate-y-1 aspect-square p-1 overflow-visible z-10">
+                             <img src="Pre_Pic/CNY-2026_Lucky Draw Tickets.png" 
+                                  class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] lg:w-[100%] max-w-none object-contain drop-shadow-lg group-hover/item:-rotate-6 transition-transform" 
+                                  alt="Lucky Draw">
+                        </div>
+
+                        <div class="col-span-2 bg-[#fff5f5] rounded-2xl border border-red-100 p-3 md:p-4 flex items-center justify-center gap-4 shadow-inner relative z-0">
+                            <img src="Pre_Pic/CNY-2026_Greeting Card.png" class="h-8 md:h-10 object-contain" alt="Card">
+                            <span class="text-[#8B0000] font-bold text-sm md:text-base">附赠：定制贺年卡 + 祝福语</span>
+                        </div>
+
+                    </div>
+
+                    <div class="mt-8 mb-2 relative z-20">
+                         <a href="#collections" onclick="document.querySelector('#collections').scrollIntoView({behavior: 'smooth'}); return false;" 
+                            class="flex items-center justify-center w-full bg-[#e60012] hover:bg-[#c2000b] text-white text-lg md:text-2xl font-black py-4 md:py-5 rounded-2xl shadow-[0_15px_30px_rgba(230,0,18,0.4)] transform active:scale-95 transition-all group overflow-hidden relative tracking-wider">
+                            <div class="absolute top-0 -left-full w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12 group-hover:animate-[shine_1s_ease-in-out]"></div>
+                            <span class="mr-3">立即抢购</span>
+                            <svg class="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+                         </a>
+                    </div>
+
+                </div>
+                <p class="text-white/90 text-xs md:text-sm mt-6 font-bold tracking-wider drop-shadow-lg">
+                    * Limited sets available. First come first served.
+                </p>
+            </div>
+        </div>
+
+        <div class="lg:hidden relative w-full flex justify-center mt-10 z-20 pointer-events-none">
+             <img src="Pre_Pic/CNY-2026_Mascot.png" class="w-48 md:w-64 drop-shadow-2xl" alt="Mascot">
+        </div>
+
+    </section>
 
         <section id="collections" class="py-24 relative">
              <div class="container mx-auto px-4 max-w-6xl relative z-10">
